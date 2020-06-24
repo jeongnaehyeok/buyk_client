@@ -1,0 +1,86 @@
+<template>
+  <router-link class="bike-item" :to="{ name: 'IndexPage'}">
+    <carousel class="casousel-box"
+      :per-page="1" 
+      :loop="true"
+      :autoplay="true" 
+      :autoplayHoverPause="true"
+      paginationActiveColor="#f75e00"
+      paginationColor="#e5e5e5"
+      paginationPosition="bottom-overlay">
+      <slide v-for="(image, index) in item.images" :key="index">
+        <img v-bind:src="image" alt="">
+      </slide>
+    </carousel>
+    <div class="info-contain">
+      <div class="item_info-box">
+        <p>{{ item.deal_area }} {{ item.model_year }}년식 {{ item.driven_distance}}km</p>
+        <p>{{ checkPrice() }} 만원</p>
+      </div>
+      <div class="item_date-box">
+        <p>{{ showTime() }}</p>
+      </div>
+    </div>
+  </router-link>
+</template>
+
+<script>
+import { Carousel, Slide } from 'vue-carousel';
+import { checkTime } from '@/utils';
+
+export default {
+  name:"BikeItem",
+  props:{
+    item:{
+      type:Object,
+    }
+  },
+  components: {
+    Carousel,
+    Slide
+  },
+  methods:{
+    checkPrice(){
+      return String(this.item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    showTime(){
+      return checkTime(this.item.created_at);
+    }
+  },
+  created(){
+  }
+}
+</script>
+
+<style lang="scss">
+@import '@/style/index.scss';
+
+.bike-item{
+  max-width: 19.625rem;
+  background: #f4efed;
+  p{
+    @include container;
+  }
+  .casousel-box{
+    width: 19.625rem;
+    height: 11.625rem;
+    img{
+      width: 100%;
+      height: 100%; 
+    }
+  }
+  .info-contain{
+    display: flex;
+    justify-content: space-between;
+    .item_info-box{
+      padding: 0.625rem;
+    }
+    .item_date-box{
+      height: 100%;
+      background-color: $orange;
+      color: $white;
+      padding: 0.125rem;
+    }
+  }
+}
+</style>

@@ -1,6 +1,10 @@
-@mixin flex-colum-center{
+@mixin flex-colum{
     display: flex;
     flex-direction: column;
+}
+
+@mixin flex-colum-center{
+    @include flex-colum;
     align-items: center;
 }
 
@@ -12,4 +16,13 @@
 @mixin container{
     margin: 0;
     padding: 0;  
+}
+
+@mixin colum-container {
+    @include flex-colum-center;
+    @include container;
+}
+@mixin row-container{
+    @include flex-row-center;
+    @include container;
 }
