@@ -12,20 +12,112 @@
             <router-link :to="{ name: 'IndexPage'}" class="choise-type">바이크 매물 팔기</router-link>
         </div>
         <div class="arrow-up"></div>
-        <form class="serch-box" @submit.prevent="">
+        <form class="serch-box" @submit.prevent="onSearch">
           <div class="input-box">
             <i class="fas fa-search"></i>
-            <input type="text" autocomplete="off" placeholder="찾으시는 바이크 모델을 검색해보세요! "/>
+            <input type="text" 
+              autocomplete="off" 
+              placeholder="찾으시는 바이크 모델을 검색해보세요!" 
+              @click="onTypeIn"
+              @blur="handleBlur"
+              v-model="search"/>
           </div>
           <button type="submit">검색</button>
+          <div class="search_help-contain" v-if="searchToggle">
+            <div class="bike_type-contain">
+              <div class="bike_type-box" v-for="(item, index) in bikeTypes" :key="index">
+                <img :src="item.image" :alt="item.name">
+                <p>{{ item.name }}</p>
+              </div>
+            </div>
+            <div class="recently_search-box">
+              <p class="title">최근 검색어</p>
+              <ul>
+                <li v-for="(search, index) in recentlySearch" :key="index">
+                  {{ search.length > 10 ? search.substr(0, 10)+"..." : search }}
+                </li>
+              </ul>
+            </div>
+          </div>
         </form>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
-    name:'IndexHeader',
+  name:'IndexHeader',
+  methods:{
+    onTypeIn(){
+      this.searchToggle = true
+    },
+    handleBlur(){
+      this.searchToggle = false
+    },
+    onSearch(){
+      const { search } = this
+      if(this.recentlySearch.length>5) this.recentlySearch.splice(0, 1)
+      this.recentlySearch.push(search)
+      const jsonrecentlySearch = JSON.stringify(this.recentlySearch)
+      localStorage.setItem('recentlySearch', jsonrecentlySearch)
+      this.search = '';
+    },
+    
+  },
+  data(){
+    return{
+      search: '',
+      searchToggle: false,
+      recentlySearch: [],
+      bikeTypes:[
+        {
+          "image":'/static/icNaked@2x.png',
+          "name":'네이키드'
+        },
+        {
+          "image":'/static/icReplica@2x.png',
+          "name":'레플리카'
+        },
+        {
+          "image":'/static/icAmerican@2x.png',
+          "name":'아메리칸'
+        },
+        {
+          "image":'static/icScooter@2x.png',
+          "name":'스쿠터'
+        },
+        {
+          "image":'static/icTour@2x.png',
+          "name":'투어링',
+        },
+        {
+          "image":'static/icElec@2x.png',
+          "name":'전기'
+        },
+        {
+          "image":'static/icIndustrial@2x.png',
+          "name":'상업용'
+        },
+        {
+          "image":'static/icAtv@2x.png',
+          "name":'ATV'
+        },
+        {
+          "image":'static/icOffroad@2x.png',
+          "name":'오프로드'
+        },
+        {
+          "image":'static/icMini@2x.png',
+          "name":'포켓,미니'
+        }
+      ],
+    }
+  },
+  created(){
+    this.recentlySearch = localStorage.recentlySearch ? JSON.parse(localStorage.recentlySearch) : [];
+  },
 }
 </script>
 
@@ -62,6 +154,9 @@ export default {
 .header-contents-contain{
   @include flex-colum-center;
   $box-width:57.5rem;
+  $serch-box-height:3.5rem;
+  $serch-box-padding:0.25rem;
+
   width: 100%;
   height: 13.25rem;
   background-color: $opacity-black;
@@ -92,13 +187,12 @@ export default {
   }
   .serch-box{
     $fonts-size: 1.25rem;
-
     @include flex-row-center;
     width: $box-width;
-    height: 3.5rem;
+    height: $serch-box-height;
     border-radius: 2px;
     background-color: $orange;
-    padding: 0.25rem;
+    padding: $serch-box-padding;
     .input-box{
       @include flex-row-center;
       width: 100%;
@@ -128,6 +222,54 @@ export default {
       &:hover, &:focus{
         outline: none;
         cursor: pointer;
+      }
+    }
+    .search_help-contain{
+      $search_help-height: 13.75rem;
+      display: flex;
+      justify-content: space-between;
+      position: absolute;
+      width: $box-width;
+      height: 13.75rem;
+      margin-top: $serch-box-height/2+$search_help-height/2;
+      margin-left: -$serch-box-padding;
+      border-radius: 2px;
+      box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
+      border: solid 1px #bfbfbf;
+      background: $white;
+      z-index: 100;
+      .bike_type-contain{
+        @include flex-row-center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 65%;
+        padding: 0 0 0 4.75rem;
+        .bike_type-box{
+          text-align: center;
+          width: 4rem;
+          margin: 0.5rem 1rem ;
+          p{
+            @include container;
+          }
+          img{
+            width: 100%;
+          }
+        }
+      }
+      .recently_search-box{
+        width: 35%;
+        margin-top: 0.625rem;
+        .title{
+          font-size: 0.875rem;
+          text-align: center;
+          color: $orange;
+        }
+        ul{
+          @include flex-colum-center;
+          @include container;
+          display: flex;
+          list-style: none;
+        }
       }
     }
   }

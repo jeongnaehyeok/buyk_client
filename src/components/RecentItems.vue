@@ -5,11 +5,13 @@
             <bike-item :item="item"/>
             <bike-item :item="item"/>
             <bike-item :item="item"/>
+            <bike-item :item="item"/>
         </div>
     </div>
 </template>
 
 <script>
+import api from '@/api'
 import BikeItem from '@/components/BikeItem'
 
 export default {
@@ -45,7 +47,7 @@ export default {
                 "updated_at": "2020-06-23T11:55:29.877321"
             },
         }
-    }
+    },
 }
 </script>
 
@@ -60,10 +62,12 @@ export default {
         text-align: center;
     }
     .items-contain{
-        @include flex-row-center;
+        display: flex;
+        justify-content: center;
     }
     .bike-item{
-        margin: 0 0.5rem;
+        width: 19.625rem;
+        margin: 0 0.5rem 1rem 0.5rem;
     }
 }
 </style>

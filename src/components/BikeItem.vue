@@ -3,7 +3,7 @@
     <carousel class="casousel-box"
       :per-page="1" 
       :loop="true"
-      :autoplay="true" 
+      :autoplay="true"
       :autoplayHoverPause="true"
       paginationActiveColor="#f75e00"
       paginationColor="#e5e5e5"
@@ -47,8 +47,6 @@ export default {
       return checkTime(this.item.created_at);
     }
   },
-  created(){
-  }
 }
 </script>
 
@@ -56,17 +54,16 @@ export default {
 @import '@/style/index.scss';
 
 .bike-item{
-  max-width: 19.625rem;
+  max-width: 100%;
   background: #f4efed;
   p{
     @include container;
   }
   .casousel-box{
-    width: 19.625rem;
-    height: 11.625rem;
+    width: 100%;
     img{
       width: 100%;
-      height: 100%; 
+      height: 11.625rem;
     }
   }
   .info-contain{
