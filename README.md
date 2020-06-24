@@ -1,21 +1,12 @@
 # buyk
 
-> A Vue.js project
+## 기술 스택
+- Vue.js 2.9.3
+- WebPack 3.6.0
+- axios
+- Vuex
+- SCSS
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# 이슈
+- mixin과 veriables파일을 전역으로 불로오는 이슈
+- - 사용하는 파일마다 불러와서 우선적으로 사용하는 것으로 임시 해결
