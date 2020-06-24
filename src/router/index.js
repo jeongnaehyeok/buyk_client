@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import BuyKMainPage from '@/pages/BuyKMainPage'
+import IndexPage from '@/pages/IndexPage'
 
 Vue.use(Router)
 
@@ -8,9 +8,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'BuyKMainPage',
+      name: 'IndexPage',
       components: {
-        default: BuyKMainPage,
+        default: IndexPage,
       }
     },
   ]
