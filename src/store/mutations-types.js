@@ -1,1 +1,2 @@
 export const TYPEINSEARCH = "TYPEINSEARCH"
+export const GETLIST = "GETLIST"

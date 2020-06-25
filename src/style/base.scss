@@ -19,6 +19,9 @@ body {
         -ms-text-size-adjust: 100%;
        -moz-text-size-adjust: 100%;
 }
+#app{
+    @include colum-container;
+}
 a{
     color: $black;
     text-decoration: none;

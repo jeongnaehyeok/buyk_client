@@ -18,18 +18,21 @@
             <input type="text" 
               autocomplete="off" 
               placeholder="찾으시는 바이크 모델을 검색해보세요!" 
-              @click="onTypeIn"
-              @blur="handleBlur"
-              v-model="search"/>
+              v-model="search"
+              @click="onTypeIn"/>
           </div>
           <button type="submit">검색</button>
           <div class="search_help-contain" v-if="searchToggle">
-            <div class="bike_type-contain">
-              <div class="bike_type-box" v-for="(item, index) in bikeTypes" :key="index">
+            <ul class="bike_type-contain">
+              <li class="bike_type-box" 
+                v-for="item in bikeTypes" 
+                :key="item.bike_type" 
+                @click.capture="bikeTypeSearch"
+                :id="item.bike_type">
                 <img :src="item.image" :alt="item.name">
                 <p>{{ item.name }}</p>
-              </div>
-            </div>
+              </li>
+            </ul>
             <div class="recently_search-box">
               <p class="title">최근 검색어</p>
               <ul>
@@ -45,26 +48,36 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex'
+
+import api from '@/api'
 
 export default {
   name:'IndexHeader',
   methods:{
     onTypeIn(){
-      this.searchToggle = true
-    },
-    handleBlur(){
-      this.searchToggle = false
+      this.searchToggle = !this.searchToggle
     },
     onSearch(){
-      const { search } = this
-      if(this.recentlySearch.length>5) this.recentlySearch.splice(0, 1)
-      this.recentlySearch.push(search)
-      const jsonrecentlySearch = JSON.stringify(this.recentlySearch)
-      localStorage.setItem('recentlySearch', jsonrecentlySearch)
-      this.search = '';
+      this.typeInSearch(this.search)
+        .then(()=>{
+          console.log("test");
+          if(this.recentlySearch.length>5) this.recentlySearch.splice(0, 1)
+          this.recentlySearch.push(this.search)
+          const jsonRecentlySearch = JSON.stringify(this.recentlySearch)
+          localStorage.setItem('recentlySearch', jsonRecentlySearch)
+          this.$router.push({name: "Listpage"})
+        })
     },
-    
+    bikeTypeSearch(e){
+      const bike_type = e.currentTarget.id
+      this.filterList({ bike_type })
+      this.$router.push({name: "Listpage"})
+    },
+    ...mapActions([
+      'typeInSearch',
+      'filterList'
+    ])
   },
   data(){
     return{
@@ -74,43 +87,53 @@ export default {
       bikeTypes:[
         {
           "image":'/static/icNaked@2x.png',
-          "name":'네이키드'
+          "name":'네이키드',
+          "bike_type":'NK'
         },
         {
           "image":'/static/icReplica@2x.png',
-          "name":'레플리카'
+          "name":'레플리카',
+          "bike_type":'RL'
         },
         {
           "image":'/static/icAmerican@2x.png',
-          "name":'아메리칸'
+          "name":'아메리칸',
+          "bike_type":'AM'
         },
         {
           "image":'static/icScooter@2x.png',
-          "name":'스쿠터'
+          "name":'스쿠터',
+          "bike_type":'SC'
         },
         {
           "image":'static/icTour@2x.png',
           "name":'투어링',
+          "bike_type":'TL'
         },
         {
           "image":'static/icElec@2x.png',
-          "name":'전기'
+          "name":'전기',
+          "bike_type":'EL'
         },
         {
           "image":'static/icIndustrial@2x.png',
-          "name":'상업용'
+          "name":'상업용',
+          "bike_type":'CM'
         },
         {
           "image":'static/icAtv@2x.png',
-          "name":'ATV'
+          "name":'ATV',
+          "bike_type":'AT'
         },
         {
           "image":'static/icOffroad@2x.png',
-          "name":'오프로드'
+          "name":'오프로드',
+          "bike_type":'OL'
         },
         {
           "image":'static/icMini@2x.png',
-          "name":'포켓,미니'
+          "name":'포켓,미니',
+          "bike_type":'MI'
         }
       ],
     }
@@ -129,7 +152,7 @@ export default {
   flex-wrap: wrap;
   align-content: space-between;
   justify-content: center;
-  height: 41rem;
+  height: 40rem;
   background-image: url("/static/thumnail.jpg");
   background-repeat:no-repeat;
   background-position : center;
@@ -245,11 +268,12 @@ export default {
         width: 65%;
         padding: 0 0 0 4.75rem;
         .bike_type-box{
-          text-align: center;
           width: 4rem;
-          margin: 0.5rem 1rem ;
+          margin: 0 1rem ;
+          cursor: pointer;
           p{
             @include container;
+            text-align: center;
           }
           img{
             width: 100%;
@@ -266,10 +290,11 @@ export default {
         }
         ul{
           @include flex-colum-center;
-          @include container;
-          display: flex;
-          list-style: none;
         }
+      }
+      ul{
+        @include container;
+        list-style: none;
       }
     }
   }

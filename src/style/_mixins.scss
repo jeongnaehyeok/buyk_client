@@ -26,3 +26,16 @@
     @include flex-row-center;
     @include container;
 }
+
+@mixin item-box-size($item-box-size:19.625rem){
+    .bike-item{
+        // 4:3
+        width: $item-box-size;
+        height: $item-box-size*0.75;
+        img{
+            // 16:9
+            width: $item-box-size;
+            height: $item-box-size*0.5625;
+        }
+    }
+}

@@ -46,25 +46,25 @@ export default {
     showTime(){
       return checkTime(this.item.created_at);
     }
-  },
+  }
 }
 </script>
 
 <style lang="scss">
 @import '@/style/index.scss';
+.VueCarousel-slide{
+  margin-bottom: -0.625rem;
+}
 
 .bike-item{
   max-width: 100%;
   background: #f4efed;
+  margin: 0 1rem 0.5rem 0;
   p{
     @include container;
   }
   .casousel-box{
     width: 100%;
-    img{
-      width: 100%;
-      height: 11.625rem;
-    }
   }
   .info-contain{
     display: flex;
