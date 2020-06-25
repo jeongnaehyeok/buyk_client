@@ -33,3 +33,20 @@ a:hover,
 a:focus{
     color: $black;
 }
+
+// Logo
+
+.header-logo-contain{
+    .logo-box{
+      display: flex;
+      align-items: center;
+      img{
+        margin: 0.75rem;
+        width: 1.825rem;
+        height: auto;
+      }
+      p{
+        font-size: 1.125rem; // 18px
+      }
+    }
+  }

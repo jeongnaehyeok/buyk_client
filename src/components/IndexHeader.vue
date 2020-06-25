@@ -61,7 +61,6 @@ export default {
     onSearch(){
       this.typeInSearch(this.search)
         .then(()=>{
-          console.log("test");
           if(this.recentlySearch.length>5) this.recentlySearch.splice(0, 1)
           this.recentlySearch.push(this.search)
           const jsonRecentlySearch = JSON.stringify(this.recentlySearch)
@@ -157,23 +156,11 @@ export default {
   background-repeat:no-repeat;
   background-position : center;
   background-size:cover;
-}
-
-.header-logo-contain{
-  width: 64rem;
-  .logo-box{
-    display: flex;
-    align-items: center;
-    img{
-      margin: 0.75rem;
-      width: 1.825rem;
-      height: auto;
-    }
-    p{
-      font-size: 1.125rem; // 18px
-    }
+  .header-logo-contain{
+    width: 64rem;
   }
 }
+
 .header-contents-contain{
   @include flex-colum-center;
   $box-width:57.5rem;
@@ -236,16 +223,14 @@ export default {
       }
     }
     button{
-      border: 0;
+      height: 100%;
       width: 7.5rem;
+      border: 0;
       color:$white;
       background: $orange;
-      height: 100%;
       font-size: $fonts-size;
-      &:hover, &:focus{
-        outline: none;
-        cursor: pointer;
-      }
+      cursor: pointer;
+      @include outline-none;
     }
     .search_help-contain{
       $search_help-height: 13.75rem;

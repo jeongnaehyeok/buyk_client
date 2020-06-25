@@ -18,6 +18,16 @@
     padding: 0;  
 }
 
+@mixin container-max-size {
+    max-width: 1440px;
+    width: 95%;
+}
+
+@mixin contents{
+    @include container-max-size;
+    @include colum-container;
+}
+
 @mixin colum-container {
     @include flex-colum-center;
     @include container;
@@ -37,5 +47,11 @@
             width: $item-box-size;
             height: $item-box-size*0.5625;
         }
+    }
+}
+
+@mixin outline-none{
+    &:hover, &:focus{
+        outline: none;
     }
 }

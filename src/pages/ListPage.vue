@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import ItemList from '@/components/ItemList'
 
 export default {
@@ -15,37 +17,11 @@ export default {
     components:{
         ItemList
     },
-    data(){
-        return {
-            items:[
-                {
-                    "id": 4,
-                    "model": "BMW - S1000RR",
-                    "user": "test1",
-                    "price": 3000,
-                    "bike_style": "레플리카",
-                    "payment_method": {
-                        "card": true,
-                        "cash": false,
-                        "loan": false,
-                        "trade": false,
-                        "lease": false
-                    },
-                    "images": ["/static/item1.jpg", "/static/item2.jpg", "/static/item3.jpg"],
-                    "deal_area": "전북",
-                    "model_year": 2017,
-                    "driven_distance": 2000,
-                    "document_status": "준비되지않음",
-                    "repair_history": "없습니다",
-                    "tuning_history": "없습니다",
-                    "detail_information": "없습니다",
-                    "crawled_url": null,
-                    "created_at": "2020-06-23T11:55:29.877298",
-                    "updated_at": "2020-06-23T11:55:29.877321"
-                },
-            ]
-        }
-    },
+    computed:{
+        ...mapState([
+            'items'
+        ])
+    }
 }
 </script>
 
@@ -53,15 +29,18 @@ export default {
 @import '@/style/index.scss';
 
 .list-page{
-    width: 95%;
+    @include container-max-size;
     .title{
         width: 18.75rem;
         font-size: $title-font-size;
         border-bottom: 1px solid $black;
+        margin: 0.5rem 0 1rem;
     }
+    @include item-box-size;
     .item-list{
-        justify-content: space-between;
-        @include item-box-size;
+        @include container-max-size;
+        justify-content: flex-start;
+        flex-wrap: wrap;
     }
 }
 </style>

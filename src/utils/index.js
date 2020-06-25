@@ -4,7 +4,7 @@
 export const checkTime = (start) => {
     const old = new Date(start+"z");
     const now = new Date();
-    const gap = parseInt((now.getTime()-old.getTime())/1000);
+    const gap = parseInt((now.getTime()-old.getTime())/10000);
     if(gap<60){
       return `${gap} 초 전`;
     }

@@ -8,6 +8,6 @@ export default{
         state.buykFilter.model = search
     },
     [GETLIST](state, payload){
-        state.bikeList = [...payload]
+        state.items = [...payload]
     }
 }

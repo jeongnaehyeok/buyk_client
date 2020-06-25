@@ -8,8 +8,8 @@
       paginationActiveColor="#f75e00"
       paginationColor="#e5e5e5"
       paginationPosition="bottom-overlay">
-      <slide v-for="(image, index) in item.images" :key="index">
-        <img v-bind:src="image" alt="">
+      <slide v-for="image in item.images" :key="image.id">
+        <img v-bind:src="'http://127.0.0.1:8000'+image.image" alt="">
       </slide>
     </carousel>
     <div class="info-contain">
@@ -46,6 +46,9 @@ export default {
     showTime(){
       return checkTime(this.item.created_at);
     }
+  },
+  created(){
+    console.log(this.item.images);
   }
 }
 </script>

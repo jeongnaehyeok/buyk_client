@@ -28,10 +28,14 @@ export default {
 @import '@/style/index.scss';
 
 .index-page{
+  @include flex-colum-center;
   .recent-items-title{
     font-size: $title-font-size;
     text-align: center;
   }
   @include item-box-size;
+  .item-list{
+    @include container-max-size;
+  }
 }
 </style>

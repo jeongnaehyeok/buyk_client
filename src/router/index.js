@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+// header
+import Header from '@/components/Header'
+
 // page
 import IndexPage from '@/pages/IndexPage'
 import Listpage from '@/pages/Listpage'
@@ -24,6 +28,7 @@ export default new Router({
       path: '/list',
       name: 'Listpage',
       components: {
+        header: Header,
         default: Listpage,
         footer: Footer,
       }
