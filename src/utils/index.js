@@ -1,8 +1,8 @@
 
 // 매물이 지난 시간 확인하는 함수
 
-export const checkTime = (start) => {
-    const old = new Date(start+"z");
+export const checkTime = (time) => {
+    const old = new Date(time+"z");
     const now = new Date();
     const gap = parseInt((now.getTime()-old.getTime())/10000);
     if(gap<60){
@@ -20,4 +20,8 @@ export const checkTime = (start) => {
     else{
       return `${parseInt(gap / 2592000)} 달 전`;
     }
+}
+
+export const checkPrice = (price) => {
+  return String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

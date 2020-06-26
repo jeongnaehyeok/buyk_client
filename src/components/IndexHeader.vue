@@ -9,7 +9,7 @@
     <div class="header-contents-contain">
         <div class="choise-box">
             <router-link :to="{ name: 'IndexPage'}" class="choise-type-active" >바이크 매물 검색</router-link>
-            <router-link :to="{ name: 'IndexPage'}" class="choise-type">바이크 매물 팔기</router-link>
+            <router-link :to="{ name: 'UserItemPage'}" class="choise-type">바이크 매물 팔기</router-link>
         </div>
         <div class="arrow-up"></div>
         <form class="serch-box" @submit.prevent="onSearch">

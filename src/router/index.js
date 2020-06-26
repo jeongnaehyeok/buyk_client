@@ -7,6 +7,7 @@ import Header from '@/components/Header'
 // page
 import IndexPage from '@/pages/IndexPage'
 import Listpage from '@/pages/Listpage'
+import UserItemPage from '@/pages/UserItemPage'
 
 // componet
 import Footer from '@/components/Footer'
@@ -30,6 +31,15 @@ export default new Router({
       components: {
         header: Header,
         default: Listpage,
+        footer: Footer,
+      }
+    },
+    {
+      path: '/useritem',
+      name: 'UserItemPage',
+      components: {
+        header: Header,
+        default: UserItemPage,
         footer: Footer,
       }
     },

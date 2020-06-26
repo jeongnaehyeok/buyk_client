@@ -26,7 +26,7 @@
 
 <script>
 import { Carousel, Slide } from 'vue-carousel';
-import { checkTime } from '@/utils';
+import { checkTime, checkPrice } from '@/utils';
 
 export default {
   name:"BikeItem",
@@ -40,8 +40,8 @@ export default {
     Slide
   },
   methods:{
-    checkPrice(){
-      return String(this.item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    showPrice(){
+      return checkPrice(this.item.price);
     },
     showTime(){
       return checkTime(this.item.created_at);
@@ -61,7 +61,7 @@ export default {
 
 .bike-item{
   max-width: 100%;
-  background: #f4efed;
+  background: $gray;
   margin: 0 1rem 0.5rem 0;
   p{
     @include container;
