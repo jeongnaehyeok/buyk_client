@@ -1,15 +1,15 @@
 <template>
   <div class="index-header">
     <div class="header-logo-contain">
-        <router-link class="logo-box" :to="{ name: 'IndexPage'}">
+        <router-link class="logo-box" :to="{ name: 'Index'}">
             <img src="/static/icon.png" alt="로고">
             <p><strong>BuyK</strong></p>
         </router-link>
     </div>
     <div class="header-contents-contain">
         <div class="choise-box">
-            <router-link :to="{ name: 'IndexPage'}" class="choise-type-active" >바이크 매물 검색</router-link>
-            <router-link :to="{ name: 'UserItemPage'}" class="choise-type">바이크 매물 팔기</router-link>
+            <router-link :to="{ name: 'Index'}" class="choise-type-active" >바이크 매물 검색</router-link>
+            <router-link :to="{ name: 'UserItem'}" class="choise-type">바이크 매물 팔기</router-link>
         </div>
         <div class="arrow-up"></div>
         <form class="serch-box" @submit.prevent="onSearch">

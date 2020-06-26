@@ -9,6 +9,7 @@ import IndexPage from '@/pages/IndexPage'
 import Listpage from '@/pages/Listpage'
 import UserItemPage from '@/pages/UserItemPage'
 import LoginPage from '@/pages/LoginPage'
+import SignupPage from '@/pages/SignupPage'
 
 // componet
 import Footer from '@/components/Footer'
@@ -20,7 +21,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'IndexPage',
+      name: 'Index',
       components: {
         default: IndexPage,
         footer: Footer,
@@ -28,7 +29,7 @@ export default new Router({
     },
     {
       path: '/list',
-      name: 'Listpage',
+      name: 'List',
       components: {
         header: Header,
         default: Listpage,
@@ -37,7 +38,7 @@ export default new Router({
     },
     {
       path: '/login',
-      name: 'LoginPage',
+      name: 'Login',
       components: {
         header: Header,
         default: LoginPage,
@@ -45,8 +46,17 @@ export default new Router({
       }
     },
     {
+      path: '/signup',
+      name: 'Signup',
+      components: {
+        header: Header,
+        default: SignupPage,
+        footer: Footer,
+      }
+    },
+    {
       path: '/useritem',
-      name: 'UserItemPage',
+      name: 'UserItem',
       components: {
         header: Header,
         default: UserItemPage,

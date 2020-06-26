@@ -1,5 +1,5 @@
 <template>
-  <router-link class="bike-item" :to="{ name: 'IndexPage'}">
+  <router-link class="bike-item" :to="{ name: 'Index'}">
     <carousel class="casousel-box"
       :per-page="1" 
       :loop="true"

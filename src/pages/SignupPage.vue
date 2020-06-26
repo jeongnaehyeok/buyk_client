@@ -1,12 +1,18 @@
 <template>
-  <div class="login-page">
-    <div class="login-contain">
-      <h1>Login</h1>
+  <div class="sign-page">
+    <div class="sign-contain">
+      <h1>SignUp</h1>
       <form @click.prevent="onSubmit">
-        <input type="text" placeholder="아이디를 입력해주세요">
-        <input type="password" placeholder="비밀번호를 입력해주세요">
-        <button>Login</button>
-        <p>회원이 아니신가요? <router-link :to="{ name: 'Signup' }">회원가입하러 가기</router-link></p>
+        <input type="text" 
+            placeholder="아이디를 입력해주세요">
+        <input type="email"
+            placeholder="이메일을 입력해주세요." />
+        <input type="password" 
+            placeholder="비밀번호를 입력해주세요">
+        <input type="password" 
+            placeholder="비밀번호를 다시 한번 입력해주세요.">
+        <button>SignUp</button>
+        <p>이미 가입하셨나요? <router-link :to="{ name: 'Login' }">로그인하러가기</router-link></p>
       </form>
     </div>
   </div>
@@ -14,19 +20,19 @@
 
 <script>
 export default {
-    name: 'LoginPage',
+    name: 'SignupPage',
 }
 </script>
 
 <style lang="scss">
 @import '@/style/index.scss';
 
-.login-page{
+.sign-page{
   @include colum-container;
   height: 100%;
   margin-top: 10vh;
   justify-content: center;
-  .login-contain{
+  .sign-contain{
     @include flex-colum-center;
     width: 34.375rem;
     margin: 1rem;

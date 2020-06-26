@@ -2,7 +2,7 @@
   <header>
     <div class="header-left-contain">
       <div class="header-logo-contain">
-        <router-link class="logo-box" :to="{ name: 'Listpage'}">
+        <router-link class="logo-box" :to="{ name: 'List'}">
             <img src="/static/icon.png" alt="로고">
             <p><strong>BuyK</strong></p>
         </router-link>
@@ -18,17 +18,17 @@
         <p>방구석 호랑이님 바이크를</p>
         <p>판매하시겠습니까?</p>
         <p class="sell-btn">
-          <router-link :to="{ name: 'UserItemPage'}">
+          <router-link :to="{ name: 'UserItem'}">
             판매하기
           </router-link>
         </p>
       </div>
       <div class="login-contain" v-if="true">
-        <router-link :to="{ name: 'LoginPage'}">
+        <router-link :to="{ name: 'Login'}">
           Login
         </router-link>
         /
-        <router-link :to="{ name: 'IndexPage'}">
+        <router-link :to="{ name: 'Signup'}">
           SignUp
         </router-link>
       </div>
