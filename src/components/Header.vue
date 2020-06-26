@@ -14,7 +14,7 @@
       </form>
     </div>
     <div class="header-right-contain">
-      <div class="sell-box" v-if="true">
+      <div class="sell-box" v-if="false">
         <p>방구석 호랑이님 바이크를</p>
         <p>판매하시겠습니까?</p>
         <p class="sell-btn">
@@ -23,8 +23,8 @@
           </router-link>
         </p>
       </div>
-      <div class="login-contain" v-if="false">
-        <router-link :to="{ name: 'IndexPage'}">
+      <div class="login-contain" v-if="true">
+        <router-link :to="{ name: 'LoginPage'}">
           Login
         </router-link>
         /
@@ -47,6 +47,7 @@ export default {
 
 header{
   @include container-max-size;
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -80,7 +81,6 @@ header{
   }
   .header-right-contain{
     @include flex-row-center;
-    margin-top: 1.25rem;
     .sell-box{
       @include flex-colum;
       align-items: flex-end;

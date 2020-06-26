@@ -8,6 +8,7 @@ import Header from '@/components/Header'
 import IndexPage from '@/pages/IndexPage'
 import Listpage from '@/pages/Listpage'
 import UserItemPage from '@/pages/UserItemPage'
+import LoginPage from '@/pages/LoginPage'
 
 // componet
 import Footer from '@/components/Footer'
@@ -31,6 +32,15 @@ export default new Router({
       components: {
         header: Header,
         default: Listpage,
+        footer: Footer,
+      }
+    },
+    {
+      path: '/login',
+      name: 'LoginPage',
+      components: {
+        header: Header,
+        default: LoginPage,
         footer: Footer,
       }
     },

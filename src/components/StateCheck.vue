@@ -11,7 +11,7 @@
                     </div>
                     <div class="state_btn-box">
                         <button>수정</button>
-                        <button>판매완료</button>
+                        <button>삭제</button>
                     </div>
                 </div>
             </li>

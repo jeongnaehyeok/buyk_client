@@ -15,7 +15,7 @@
     <div class="info-contain">
       <div class="item_info-box">
         <p>{{ item.deal_area }} {{ item.model_year }}년식 {{ item.driven_distance}}km</p>
-        <p>{{ checkPrice() }} 만원</p>
+        <p>{{ showPrice() }} 만원</p>
       </div>
       <div class="item_date-box">
         <p>{{ showTime() }}</p>
