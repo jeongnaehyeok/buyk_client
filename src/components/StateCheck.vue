@@ -45,6 +45,7 @@ export default {
 .state-check {
     width: 34.375rem;
     height: 36rem;
+    margin-bottom: 0.25rem;
     padding: .375rem 0;
     box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
     border-radius: 10px;

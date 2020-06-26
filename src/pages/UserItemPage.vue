@@ -14,6 +14,7 @@
             :items="sellItems"/>
           <state-check 
             v-show="!activeBtn"/>
+          <router-link class="sell_btn-contain" :to="{ name: 'Register'}">바이크 판매하기</router-link>
       </div>
   </div>
 </template>
@@ -88,6 +89,17 @@ export default {
                 background-color: $orange;
                 color: $white;
             }
+        }
+        .sell_btn-contain{
+            width: 34.375rem;
+            height: 2.75rem;
+            padding: 0.5rem;
+            border-radius: 10px;
+            box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
+            color: $white;
+            background: $orange;
+            text-align: center;
+            font-size: 1.25rem;
         }
     }
 }

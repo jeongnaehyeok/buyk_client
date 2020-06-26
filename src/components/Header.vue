@@ -62,11 +62,11 @@ header{
       width: 23.25rem;
       height: 2.375rem;
       border-radius: 5px;
-      border: solid 0.5px $black;
+      box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
       input{
         @include container;
         @include outline-none;
-        padding-left: 1.625rem;
+        padding-left: 1rem;
         border: 0;
         background-color: $none-color;
         flex-basis: 90%;

@@ -74,14 +74,16 @@ export default {
       @include colum-container;
       input{
         @include user-input-box;
-        border: 0;
         margin-bottom: 0.775rem;
+        border: 0;
+        box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
       }
       button{
         @include outline-none;
         @include user-input-box;
         width: 100%;
         border: 0;
+        box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
         background: $orange;
         color: $white;
       }

@@ -10,6 +10,7 @@ import Listpage from '@/pages/Listpage'
 import UserItemPage from '@/pages/UserItemPage'
 import LoginPage from '@/pages/LoginPage'
 import SignupPage from '@/pages/SignupPage'
+import RegisterPage from '@/pages/RegisterPage'
 
 // componet
 import Footer from '@/components/Footer'
@@ -60,6 +61,15 @@ export default new Router({
       components: {
         header: Header,
         default: UserItemPage,
+        footer: Footer,
+      }
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      components: {
+        header: Header,
+        default: RegisterPage,
         footer: Footer,
       }
     },

@@ -65,13 +65,13 @@ export default {
           this.recentlySearch.push(this.search)
           const jsonRecentlySearch = JSON.stringify(this.recentlySearch)
           localStorage.setItem('recentlySearch', jsonRecentlySearch)
-          this.$router.push({name: "Listpage"})
+          this.$router.push({name: "List"})
         })
     },
     bikeTypeSearch(e){
       const bike_type = e.currentTarget.id
       this.filterList({ bike_type })
-      this.$router.push({name: "Listpage"})
+      this.$router.push({name: "List"})
     },
     ...mapActions([
       'typeInSearch',
