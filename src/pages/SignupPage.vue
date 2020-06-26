@@ -2,15 +2,19 @@
   <div class="sign-page">
     <div class="sign-contain">
       <h1>SignUp</h1>
-      <form @click.prevent="onSubmit">
+      <form novalidate @submit.prevent="onSubmit">
         <input type="text" 
-            placeholder="아이디를 입력해주세요">
+            placeholder="아이디를 입력해주세요"
+            v-model="name">
         <input type="email"
-            placeholder="이메일을 입력해주세요." />
+            placeholder="이메일을 입력해주세요." 
+            v-model="email"/>
         <input type="password" 
-            placeholder="비밀번호를 입력해주세요">
+            placeholder="비밀번호를 입력해주세요"
+            v-model="password">
         <input type="password" 
-            placeholder="비밀번호를 다시 한번 입력해주세요.">
+            placeholder="비밀번호를 다시 한번 입력해주세요."
+            v-model="passwordConfirm">
         <button>SignUp</button>
         <p>이미 가입하셨나요? <router-link :to="{ name: 'Login' }">로그인하러가기</router-link></p>
       </form>
@@ -21,6 +25,21 @@
 <script>
 export default {
     name: 'SignupPage',
+    methods:{
+      onSubmit(){
+        const { name, email, password, passwordConfirm } = this;
+        if(!name || !email || !password || !passwordConfirm) return  alert('모든 항목을 입력해주세요.')
+        if(password !== passwordConfirm) return alert('비밀번호가 일치하지 않습니다.')
+      }
+    },
+    data(){
+      return{
+        name:'',
+        email:'',
+        password:'',
+        passwordConfirm:''
+      }
+    }
 }
 </script>
 

@@ -2,9 +2,13 @@
   <div class="login-page">
     <div class="login-contain">
       <h1>Login</h1>
-      <form @click.prevent="onSubmit">
-        <input type="text" placeholder="아이디를 입력해주세요">
-        <input type="password" placeholder="비밀번호를 입력해주세요">
+      <form @submit.prevent="onSubmit">
+        <input type="text" 
+          v-model="name"
+          placeholder="아이디를 입력해주세요">
+        <input type="password" 
+          v-model="password"
+          placeholder="비밀번호를 입력해주세요">
         <button>Login</button>
         <p>회원이 아니신가요? <router-link :to="{ name: 'Signup' }">회원가입하러 가기</router-link></p>
       </form>
@@ -15,6 +19,19 @@
 <script>
 export default {
     name: 'LoginPage',
+    methods:{
+      onSubmit(){
+        const { name, password } = this
+        if(!name) return alert('아이디를 입력해주세요!')
+        if(!password) return alert('비밀번호를 입력해주세요!')
+      }
+    },
+    data(){
+      return{
+        name:'',
+        password:''
+      }
+    }
 }
 </script>
 
