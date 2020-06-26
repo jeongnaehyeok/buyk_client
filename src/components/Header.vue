@@ -48,6 +48,7 @@ export default {
 header{
   @include container-max-size;
   margin-top: 0.5rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

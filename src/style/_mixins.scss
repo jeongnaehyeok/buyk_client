@@ -55,3 +55,8 @@
         outline: none;
     }
 }
+
+@mixin user-input-box{
+    width: 22.5rem;
+    height: 2.375rem;
+}
