@@ -72,3 +72,46 @@
     padding: 0.5rem;
     border-radius: 5px;
 }
+
+@mixin register-form-contain {
+    min-width: 20rem;
+    width: 40rem;
+    min-height: 60vh;
+    h2{
+        margin: 0;
+        font-weight: 600;
+        font-size: 2rem;
+    }
+}
+
+@mixin buyk-btn{
+    @include outline-none-btn;
+    height: 2.75rem;
+    padding: 0 1rem;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
+    background: $orange;
+    font-size: 1.25rem;
+    color: $white;
+}
+
+@mixin label-btn {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    height: 2.75rem;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
+    background: $gray;
+    line-height: 2.75rem;
+    font-size: 1.25rem;
+    color: $black;
+    cursor: pointer;
+    &.checkActive{
+        background: $orange;
+        color: $white;
+    }
+}

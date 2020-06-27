@@ -3,10 +3,26 @@
     <progress-bar :progressIndex="progressIndex"/>
     <model-form v-show="progressIndex == 0"
       :model="model"
-      @onModel="onModel"/>
+      :bike_style="bike_style"
+      @onModel="onModel"
+      @onType="onType"/>
     <image-form v-show="progressIndex == 1"
       :images="images"
       @onImage="onImage"/>
+    <payment-form v-show="progressIndex == 2"
+      :payment_method="payment_method"
+      @onPayment="onPayment"/>
+    <bike-basic-form v-show="progressIndex == 3"
+      :price="price"
+      :deal_area="deal_area"
+      :model_year="model_year"
+      :driven_distance="driven_distance"
+      :document_status="document_status"
+      :onPrice="onPrice"
+      :onArea="onArea"
+      :onYear="onYear"
+      :onDistance="onDistance"
+      :onDocument="onDocument"/>
     <div class="progress_btn-contain">
       <button 
         :class="{deactive:preAtive}"
@@ -21,16 +37,20 @@
 </template>
 
 <script>
-import ProgressBar from '@/components/registerform/ProgressBar'
-import ModelForm from '@/components/registerform/ModelForm'
-import ImageForm from '@/components/registerform/ImageForm'
+import ProgressBar from '@/components/form/ProgressBar'
+import ModelForm from '@/components/form/ModelForm'
+import ImageForm from '@/components/form/ImageForm'
+import PaymentForm from '@/components/form/PaymentForm'
+import BikeBasicForm from '@/components/form/BikeBasicForm'
 
 export default {
     name:'RegisterPage',
     components:{
       ProgressBar,
       ModelForm,
-      ImageForm
+      ImageForm,
+      PaymentForm,
+      BikeBasicForm
     },
     methods:{
       preBtn(){
@@ -47,12 +67,45 @@ export default {
       },
       onSubmit(){
         console.log("제출");
+        console.log("model", this.model);
+        console.log("images", this.images);
+        console.log("bike_style", this.bike_style);
+        console.log("price", this.price);
+        console.log("deal_area", this.deal_area);
+        console.log("model_year", this.model_year);
+        console.log("driven_distance", this.driven_distance);
+        console.log("document_status", this.document_status);
+        console.log("repair_history", this.repair_history);
+        console.log("tuning_history", this.tuning_history);
+        console.log("detail_information", this.detail_information);
+        console.log("payment_method", this.payment_method);
       },
       onModel(inputModel){
         this.model = inputModel
       },
+      onType(inputType){
+        this.bike_style = inputType
+      },
       onImage(inputImage){
         this.images = [...inputImage]
+      },
+      onPayment(inputPayment){
+        this.payment_method = {...inputPayment}
+      },
+      onPrice(inputPrice){
+        this.price = inputPrice
+      },
+      onArea(inputArea){
+        this.deal_area = inputArea
+      },
+      onYear(inputYear){
+        this.model_year = inputYear
+      },
+      onDistance(inputDistance){
+        this.driven_distance = inputDistance
+      },
+      onDocument(inputDocument){
+        this.document_status = inputDocument
       }
     },
     data(){
@@ -60,63 +113,21 @@ export default {
         model: "",
         images:[],
         bike_style: null,
-        price: null,
-        deal_area: null,
-        model_year: null,
-        driven_distance: null,
+        price: 0,
+        deal_area: '',
+        model_year: 0,
+        driven_distance: 0,
         document_status: null,
         repair_history: "",
         tuning_history: "",
         detail_information: "",
         payment_method: {
-          card: false,
           cash: false,
-          loan: false,
           trade: false,
+          loan: false,
+          card: false,
           lease: false
         },
-        bikeTypes:[
-          {
-            "name":'네이키드',
-            "bike_type":'NK'
-          },
-          {
-            "name":'레플리카',
-            "bike_type":'RL'
-          },
-          {
-            "name":'아메리칸',
-            "bike_type":'AM'
-          },
-          {
-            "name":'스쿠터',
-            "bike_type":'SC'
-          },
-          {
-            "name":'투어링',
-            "bike_type":'TL'
-          },
-          {
-            "name":'전기',
-            "bike_type":'EL'
-          },
-          {
-            "name":'상업용',
-            "bike_type":'CM'
-          },
-          {
-            "name":'ATV',
-            "bike_type":'AT'
-          },
-          {
-            "name":'오프로드',
-            "bike_type":'OL'
-          },
-          {
-            "name":'포켓,미니',
-            "bike_type":'MI'
-          }
-        ],
         progressIndex:0,
         proAtive: false,
         preAtive: true,
