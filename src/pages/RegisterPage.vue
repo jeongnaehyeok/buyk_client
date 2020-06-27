@@ -1,6 +1,12 @@
 <template>
   <div class="register-page">
     <progress-bar :progressIndex="progressIndex"/>
+    <model-form v-show="progressIndex == 0"
+      :model="model"
+      @onModel="onModel"/>
+    <image-form v-show="progressIndex == 1"
+      :images="images"
+      @onImage="onImage"/>
     <div class="progress_btn-contain">
       <button 
         :class="{deactive:preAtive}"
@@ -16,11 +22,15 @@
 
 <script>
 import ProgressBar from '@/components/registerform/ProgressBar'
+import ModelForm from '@/components/registerform/ModelForm'
+import ImageForm from '@/components/registerform/ImageForm'
 
 export default {
     name:'RegisterPage',
     components:{
-      ProgressBar
+      ProgressBar,
+      ModelForm,
+      ImageForm
     },
     methods:{
       preBtn(){
@@ -37,11 +47,18 @@ export default {
       },
       onSubmit(){
         console.log("제출");
+      },
+      onModel(inputModel){
+        this.model = inputModel
+      },
+      onImage(inputImage){
+        this.images = [...inputImage]
       }
     },
     data(){
       return{
         model: "",
+        images:[],
         bike_style: null,
         price: null,
         deal_area: null,
@@ -110,8 +127,10 @@ export default {
 
 <style lang="scss">
 @import '@/style/index.scss';
+
 .register-page{
   @include container-max-size;
+  @include colum-container;
   .progress_btn-contain{
     display: flex;
     justify-content: space-between;
@@ -129,7 +148,7 @@ export default {
       width: 5rem;
       height: 2.75rem;
       border: 0;
-      border-radius: 5px;
+      border-radius: 10px;
       box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
       background: $orange;
       font-size: 1.25rem;

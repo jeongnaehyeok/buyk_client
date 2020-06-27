@@ -56,6 +56,16 @@
     }
 }
 
+@mixin outline-none-btn {
+    @include outline-none;
+    &:hover{
+        background-color: $light-orange;
+    }
+    &:focus{
+        background-color: $dark-orange;
+    }
+}
+
 @mixin user-input-box{
     width: 22.5rem;
     height: 2.375rem;

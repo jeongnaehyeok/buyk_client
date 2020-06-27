@@ -14,7 +14,7 @@ export default {
     footer{
         width: 100%;
         height: 10vh;
-        margin-top: 10vh;
+        margin-top: 5vh;
         background-color: rgba(15, 15, 15, 0.4);
     }
 </style>

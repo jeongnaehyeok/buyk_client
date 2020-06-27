@@ -69,6 +69,10 @@ export default {
         border: 0;
         box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
         margin-bottom: 0.775rem;
+        &:focus{
+          outline: none;
+          box-shadow: inset 0 0 2px 0 $orange;
+        }
       }
       button{
         @include outline-none;
