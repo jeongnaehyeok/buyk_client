@@ -11,6 +11,7 @@ import UserItemPage from '@/pages/UserItemPage'
 import LoginPage from '@/pages/LoginPage'
 import SignupPage from '@/pages/SignupPage'
 import RegisterPage from '@/pages/RegisterPage'
+import DetailPage from '@/pages/DetailPage'
 
 // componet
 import Footer from '@/components/Footer'
@@ -71,6 +72,18 @@ export default new Router({
         header: Header,
         default: RegisterPage,
         footer: Footer,
+      }
+    },
+    {
+      path: '/bike/:Id',
+      name: 'Detail',
+      components: {
+        header: Header,
+        default: DetailPage,
+        footer: Footer,
+      },
+      props: {
+        default: true
       }
     },
   ]

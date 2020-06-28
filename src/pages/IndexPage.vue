@@ -65,6 +65,7 @@ export default {
 .index-page{
   @include flex-colum-center;
   .recent-items-title{
+    margin: 2rem 0;
     font-size: $title-font-size;
     text-align: center;
   }

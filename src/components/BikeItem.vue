@@ -75,8 +75,10 @@ export default {
     .item_date-box{
       height: 100%;
       background-color: $orange;
-      color: $white;
       padding: 0.125rem;
+      p{
+        color: $white; 
+      }
     }
   }
 }

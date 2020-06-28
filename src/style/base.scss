@@ -39,8 +39,16 @@ a:hover,
 a:focus{
     color: $black;
 }
+p{
+    margin: 0;
+    color:$black
+}
 
-// Logo
+/* 
+
+Logo
+
+*/
 
 .header-logo-contain{
     .logo-box{
