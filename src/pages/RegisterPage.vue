@@ -18,18 +18,29 @@
       :model_year="model_year"
       :driven_distance="driven_distance"
       :document_status="document_status"
-      :onPrice="onPrice"
-      :onArea="onArea"
-      :onYear="onYear"
-      :onDistance="onDistance"
-      :onDocument="onDocument"/>
+      @onPrice="onPrice"
+      @onArea="onArea"
+      @onYear="onYear"
+      @onDistance="onDistance"
+      @onDocument="onDocument"/>
+    <repair-form v-show="progressIndex == 4"
+      :repair_history="repair_history"
+      @onRepair="onRepair"/>
+    <tuning-form v-show="progressIndex == 5"
+      :tuning_history="tuning_history"
+      @onTuning="onTuning"/>
+    <detail-form v-show="progressIndex == 6"
+      :detail_information="detail_information"
+      @onDetail="onDetail"/>
     <div class="progress_btn-contain">
       <button 
-        :class="{deactive:preAtive}"
-        @click="preBtn">이전</button>
+        :class="{deactive:(progressIndex < 1) || (progressIndex == 7)}"
+        @click="preBtn"
+        :disabled="progressIndex == 7">이전</button>
       <button v-if="this.progressIndex < 7"
-        :class="{deactive:proAtive}"
-        @click="proBtn">다음</button>
+        :class="{deactive:proDeactive}"
+        @click="proBtn"
+        :disabled="proDeactive">다음</button>
       <button v-else
         @click="onSubmit">제출</button>
     </div>
@@ -42,6 +53,9 @@ import ModelForm from '@/components/form/ModelForm'
 import ImageForm from '@/components/form/ImageForm'
 import PaymentForm from '@/components/form/PaymentForm'
 import BikeBasicForm from '@/components/form/BikeBasicForm'
+import RepairForm from '@/components/form/RepairForm'
+import TuningForm from '@/components/form/TuningForm'
+import DetailForm from '@/components/form/DetailForm'
 
 export default {
     name:'RegisterPage',
@@ -50,20 +64,44 @@ export default {
       ModelForm,
       ImageForm,
       PaymentForm,
-      BikeBasicForm
+      BikeBasicForm,
+      RepairForm,
+      TuningForm,
+      DetailForm
     },
     methods:{
       preBtn(){
         this.progressIndex = this.progressIndex < 1 ? 0 : this.progressIndex-1
-        this.checkActive()
       },
       proBtn(){
         this.progressIndex = this.progressIndex > 6 ? 7 : this.progressIndex+1
-        this.checkActive()
+        this.checkInput()
       },
-      checkActive(){
-        this.proAtive = this.progressIndex > 6 ? true : false;
-        this.preAtive = this.progressIndex < 1 ? true : false;
+      checkInput(){
+        switch(this.progressIndex){
+          case 0:
+            this.proDeactive = !!this.model && !!this.bike_style ? false : true
+            break
+          case 1:
+            this.proDeactive = !this.images.length == 0 ? false : true
+            break
+          case 2:
+            this.proDeactive = Object.values(this.payment_method).includes(true) ? false : true
+            break
+          case 3:
+            const checkBool = !!this.price && !!this.deal_area && !!this.model_year && !!this.driven_distance && !!this.document_status
+            this.proDeactive = !checkBool
+            break
+          case 4:
+            this.proDeactive = !!this.repair_history ? false : true
+            break
+          case 5:
+            this.proDeactive = !!this.tuning_history ? false : true
+            break
+          case 6:
+            this.proDeactive = this.detail_information.length > 30 ? false : true
+            break
+        }
       },
       onSubmit(){
         console.log("제출");
@@ -82,42 +120,63 @@ export default {
       },
       onModel(inputModel){
         this.model = inputModel
+        this.checkInput()
       },
       onType(inputType){
         this.bike_style = inputType
+        this.checkInput()
       },
       onImage(inputImage){
         this.images = [...inputImage]
+        this.checkInput()
       },
       onPayment(inputPayment){
         this.payment_method = {...inputPayment}
+        this.checkInput()
       },
       onPrice(inputPrice){
         this.price = inputPrice
+        this.checkInput()
       },
       onArea(inputArea){
         this.deal_area = inputArea
+        this.checkInput()
       },
       onYear(inputYear){
         this.model_year = inputYear
+        this.checkInput()
       },
       onDistance(inputDistance){
         this.driven_distance = inputDistance
+        this.checkInput()
       },
       onDocument(inputDocument){
         this.document_status = inputDocument
+        this.checkInput()
+      },
+      onRepair(inputRepair){
+        this.repair_history = inputRepair
+        this.checkInput()
+      },
+      onTuning(inputTuning){
+        this.tuning_history = inputTuning
+        this.checkInput()
+      },
+      onDetail(inputDetail){
+        this.detail_information = inputDetail
+        this.checkInput()
       }
     },
     data(){
       return{
         model: "",
         images:[],
-        bike_style: null,
+        bike_style: '',
         price: 0,
         deal_area: '',
         model_year: 0,
         driven_distance: 0,
-        document_status: null,
+        document_status: '',
         repair_history: "",
         tuning_history: "",
         detail_information: "",
@@ -129,8 +188,7 @@ export default {
           lease: false
         },
         progressIndex:0,
-        proAtive: false,
-        preAtive: true,
+        proDeactive: true,
       }
     }
 }

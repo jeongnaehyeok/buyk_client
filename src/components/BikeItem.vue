@@ -47,9 +47,6 @@ export default {
       return checkTime(this.item.created_at);
     }
   },
-  created(){
-    console.log(this.item.images);
-  }
 }
 </script>
 

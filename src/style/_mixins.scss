@@ -13,6 +13,11 @@
     align-items: center;
 }
 
+/*
+
+Container
+
+*/
 @mixin container{
     margin: 0;
     padding: 0;  
@@ -50,22 +55,6 @@
     }
 }
 
-@mixin outline-none{
-    &:hover, &:focus{
-        outline: none;
-    }
-}
-
-@mixin outline-none-btn {
-    @include outline-none;
-    &:hover{
-        background-color: $light-orange;
-    }
-    &:focus{
-        background-color: $dark-orange;
-    }
-}
-
 @mixin user-input-box{
     width: 22.5rem;
     height: 2.375rem;
@@ -81,6 +70,22 @@
         margin: 0;
         font-weight: 600;
         font-size: 2rem;
+    }
+}
+
+/*
+
+Button
+
+*/
+
+@mixin outline-none-btn {
+    @include outline-none;
+    &:hover{
+        background-color: $light-orange;
+    }
+    &:focus{
+        background-color: $dark-orange;
     }
 }
 
@@ -113,5 +118,62 @@
     &.checkActive{
         background: $orange;
         color: $white;
+    }
+}
+
+@mixin toggle-btn{
+    @include container;
+    @include outline-none;
+    width: 50%;
+    height: 2.75rem;
+    border: 0;
+    box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
+    background-color: $gray;
+    font-size: 1.25rem;
+    cursor: pointer;
+    &:first-child{
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+    &:nth-child(2){
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    &.active{
+        background-color: $orange;
+        color: $white;
+    }
+}
+
+/*
+
+outline
+
+*/
+
+@mixin outline-none{
+    &:hover, &:focus{
+        outline: none;
+    }
+}
+
+/*
+
+textarea
+
+*/
+@mixin buyk-textarea {
+    @include outline-none;
+    width: 100%;
+    padding: 10px;
+    line-height: 1.5;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
+    letter-spacing: 1px;
+    font-size: 1.25rem;
+    resize: none;
+    &:focus{
+        box-shadow: inset 0 0 2px 1px $orange;
     }
 }

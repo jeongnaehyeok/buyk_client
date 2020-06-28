@@ -26,12 +26,12 @@
         :key="document[0]"
         class="document-box">
         <label :for="document[0]"
-          :class="{checkActive:document[3]}">{{ document[1] }}</label>
+          :class="{checkActive:document[2]}">{{ document[1] }}</label>
         <input type="radio" 
           :id="document[0]"
           :value="document[0]"
           v-model="inputDocument"
-          @click="onDocument"
+          @click="onClickDocument"
           hidden>
       </div>
     </div>
@@ -69,10 +69,10 @@ export default {
     enterPrice(){
       this.togglePrice = false;
     },
-    onDocument(e){
+    onClickDocument(e){
       const target = e.target.id
       this.documentList.map(v => {
-        return v[3] = v[0] == target ? true : false
+        return v[2] = v[0] == target ? true : false
       })
     }
   },
@@ -89,9 +89,9 @@ export default {
       this.$emit('onYear', this.inputyear)
     },
     inputDistance(){
-      const distance = Number(this.inputPrice.replace(/[^0-9]/g, ''))
+      const distance = Number(this.inputDistance.replace(/[^0-9]/g, ''))
       this.$emit('onDistance', distance)
-      this.inputPrice = price ? checkPrice(price) : "0"
+      this.inputDistance = distance ? checkPrice(distance) : "0"
     },
     inputDocument(){
       this.$emit('onDocument', this.inputDocument)
@@ -100,11 +100,11 @@ export default {
   created(){
     this.inputArea = this.deal_area
     this.inputyear = this.model_year
-    this.inputPrice = this.price
-    this.inputDocument = this.document_status ? [...this.documentList].map(v => {
-      return v[3] = v[0] == this.document_status ? true : false
-    }) : this.inputDocument
-    this.inputDistance = this.inputDistance
+    this.inputPrice = String(this.price)
+    this.documentList.map(v => {
+      v[2] = v[0] == this.document_status ? true : false
+    })
+    this.inputDistance = String(this.driven_distance)
   },
   data() {
     return {

@@ -37,16 +37,14 @@ export default {
       type:String
     },
     bike_style:{
-      type:{
-        type:String
-      }
+      type:String
     }
   },
   methods:{
     onClickType(e){
       const target = e.target.id
-      this.inputType = [...this.bikeTypes].map(v => {
-        return v.active = v.bike_type == target ? true : false
+      this.bikeTypes.map(v => {
+        v.active = v.bike_type == target ? true : false
       })
     }
   },
@@ -55,14 +53,14 @@ export default {
       this.$emit('onModel', this.inputModel)
     },
     inputType(){
-      console.log('hello');
+      this.$emit('onType', this.inputType)
     }
   },
-  create(){
+  created(){
     this.inputModel = this.model
-    this.bikeTypes = this.bike_style ? [...this.bikeTypes].map(v => {
-      return v.active = v.bike_type == this.bike_style ? true : false
-    }) : [...this.bikeTypes]
+    this.bikeTypes.map(v => {
+      v.active = v.bike_type == this.bike_style ? true : false
+    })
   },
   data(){
     return{

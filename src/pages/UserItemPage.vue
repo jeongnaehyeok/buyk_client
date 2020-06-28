@@ -64,30 +64,11 @@ export default {
         @include flex-colum-center;
         .state_check_btn-box{
             display: inline-flex;
-            border-radius: 10px;
             margin-bottom: 0.25rem;
+            border-radius: 10px;
             button{
-                @include container;
-                @include outline-none;
+                @include toggle-btn;
                 width: 17.1875rem;
-                height: 2.75rem;
-                border: 0;
-                box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
-                background-color: $gray;
-                font-size: 1.25rem;
-                cursor: pointer;
-                &:first-child{
-                    border-bottom-left-radius: 10px;
-                    border-top-left-radius: 10px;
-                }
-                &:nth-child(2){
-                    border-bottom-right-radius: 10px;
-                    border-top-right-radius: 10px;
-                }
-            }
-            .active{
-                background-color: $orange;
-                color: $white;
             }
         }
         .sell_btn-contain{
