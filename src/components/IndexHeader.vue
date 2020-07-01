@@ -59,7 +59,7 @@ export default {
       this.searchToggle = !this.searchToggle
     },
     onSearch(){
-      this.typeInSearch(this.search)
+      this.getList({})
         .then(()=>{
           if(this.recentlySearch.length>5) this.recentlySearch.splice(0, 1)
           this.recentlySearch.push(this.search)
@@ -70,13 +70,18 @@ export default {
     },
     bikeTypeSearch(e){
       const bike_type = e.currentTarget.id
-      this.filterList({ bike_type })
-      this.$router.push({name: "List"})
+      console.log(bike_type);
+      this.getList({bike_style:bike_type})
+        .then(()=>{
+          this.$router.push({name: "List"})
+        })
     },
     ...mapActions([
-      'typeInSearch',
-      'filterList'
+      'getList',
     ])
+  },
+  created(){
+    this.recentlySearch = localStorage.recentlySearch ? JSON.parse(localStorage.recentlySearch) : [];
   },
   data(){
     return{
@@ -136,9 +141,6 @@ export default {
         }
       ],
     }
-  },
-  created(){
-    this.recentlySearch = localStorage.recentlySearch ? JSON.parse(localStorage.recentlySearch) : [];
   },
 }
 </script>

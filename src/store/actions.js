@@ -1,33 +1,23 @@
 import api from '@/api'
 import {
-    TYPEINSEARCH,
-    GETLIST
+    GET_LIST,
+    DETAIL_BIKE
 } from './mutations-types'
 
-const typeInSearch = ({ commit }, search) => {
-    if(!!search){
-        api.get('/list/')
+const getList = ({commit}, filter) => {
+    return api.get('/list/', filter)
         .then(res => {
-            commit(TYPEINSEARCH, search)
-            commit(GETLIST, res.data)
+            commit(GET_LIST, res.data)
         })
-    }
-    else{
-        api.get('/list/')
-        .then(res => {
-            commit(TYPEINSEARCH, search)
-            commit(GETLIST, res.data)
-        })
-    }
 }
-const filterList = ({ commit }, payload) =>{
-    api.get('/list/', payload)
+const detailBike = ({commit}, id) => {
+    return api.get(`/${id}`)
         .then(res => {
-            commit(GETLIST, res.data)
+            commit(DETAIL_BIKE, res.data)
         })
 }
 
 export default{
-    typeInSearch,
-    filterList
+    getList,
+    detailBike
 }

@@ -30,13 +30,13 @@ export default new Router({
       }
     },
     {
-      path: '/list',
+      path: '/list/',
       name: 'List',
       components: {
         header: Header,
         default: Listpage,
         footer: Footer,
-      }
+      },
     },
     {
       path: '/login',
@@ -75,7 +75,7 @@ export default new Router({
       }
     },
     {
-      path: '/bike/:Id',
+      path: '/bike/:bikeId',
       name: 'Detail',
       components: {
         header: Header,

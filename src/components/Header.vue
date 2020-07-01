@@ -7,7 +7,7 @@
             <p><strong>BuyK</strong></p>
         </router-link>
       </div>
-      <form @click.prevent="onSubmit">
+      <form @submit.prevent="onSubmit">
         <input type="text"
           placeholder="찾으시는 바이크 모델을 검색해 보세요.">
         <button><i class="fas fa-search"></i></button>
@@ -39,6 +39,11 @@
 <script>
 export default {
     name:'Header',
+    methods:{
+      onSubmit(){
+        console.log("검색기능은 구현하지 못했습니다.");
+      }
+    }
 }
 </script>
 
@@ -48,7 +53,7 @@ export default {
 header{
   @include container-max-size;
   margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

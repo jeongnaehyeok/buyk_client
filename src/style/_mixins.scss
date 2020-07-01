@@ -177,3 +177,34 @@ textarea
         box-shadow: inset 0 0 2px 1px $orange;
     }
 }
+
+/*
+
+active
+
+*/
+
+@mixin active{
+    background: $orange;
+    color: $white;
+    p{
+        color: $white;
+    }
+}
+
+/*
+
+filter box
+
+*/
+
+@mixin filter-box{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
+    background: $gray;
+    z-index: 1;
+    cursor: pointer;
+}

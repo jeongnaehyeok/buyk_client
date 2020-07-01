@@ -14,7 +14,7 @@
         paginationColor="#e5e5e5"
         paginationPosition="bottom-overlay">
         <slide v-for="image in item.images" :key="image.id">
-            <img :src="image.image" alt="바이크 이미지">
+            <img :src="'http://127.0.0.1:8000' + image.image" alt="바이크 이미지">
         </slide>
     </carousel>
     <div class="detail-info-contain">
@@ -24,11 +24,11 @@
         <h2>{{item.model}}</h2>
         <p class="item_price-box">{{ showPrice() }} 만원</p>
         <div class="item_payment-box">
-            <p :class="{active:item.payment_method.cash}">현금</p>
-            <p :class="{active:item.payment_method.card}">카드</p>
-            <p :class="{active:item.payment_method.loan}">대출</p>
-            <p :class="{active:item.payment_method.trade}">대차</p>
-            <p :class="{active:item.payment_method.lease}">리스</p>
+            <p :class="{active:payment_method.cash}">현금</p>
+            <p :class="{active:payment_method.card}">카드</p>
+            <p :class="{active:payment_method.loan}">대출</p>
+            <p :class="{active:payment_method.trade}">대차</p>
+            <p :class="{active:payment_method.lease}">리스</p>
         </div>
         <table>
             <tr class="table_head">
@@ -62,7 +62,7 @@
     <div class="profile-contain">
         <img src="/static/default.png" alt="프로필 이미지">
         <div class="profile-box">
-            <h3>홍길동</h3>
+            <h3>{{item.user}}</h3>
             <p>010-1234-5678</p>
         </div>
     </div>
@@ -72,12 +72,19 @@
 <script>
 import { Carousel, Slide } from 'vue-carousel';
 import { checkTime, checkPrice } from '@/utils';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'DetailPage',
     components: {
         Carousel,
         Slide
+    },
+    props:{
+        bikeId:{
+            type:String,
+            required: true,
+        },
     },
     methods:{
         showPrice(){
@@ -88,62 +95,24 @@ export default {
         },
         showRepair(){
             return this.item.repair_history == "없음" ? "없음" : "있음"
-        }
+        },        
+        ...mapActions([
+            'detailBike',
+        ]),
     },
-    data(){
-        return{
-            item:{
-            "id": 6,
-            "model": "BMW888",
-            "user": "test1",
-            "price": 1000,
-            "bike_style": "레플리카",
-            "payment_method": {
-                "card": true,
-                "cash": false,
-                "loan": true,
-                "trade": false,
-                "lease": false
-            },
-            "images": [
-                {
-                    "id": 20,
-                    "image": "/static/item1.jpg"
-                },
-                {
-                    "id": 21,
-                    "image": "/static/item2.jpg"
-                },
-                {
-                    "id": 22,
-                    "image": "/static/item3.jpg"
-                },
-                {
-                    "id": 23,
-                    "image": "/static/thumnail.jpg"
-                },
-                {
-                    "id": 24,
-                    "image": "/static/icon.png"
-                },
-                {
-                    "id": 25,
-                    "image": "/static/icElec@2x.png"
-                }
-            ],
-            "deal_area": "대구",
-            "model_year": 2012,
-            "driven_distance": 100000,
-            "document_status": "준비됨",
-            "repair_history": "뭔가 대단한 사건이있었음",
-            "tuning_history": "없어요",
-            "detail_information": "괜찮습니다",
-            "crawled_url": null,
-            "created_at": "2020-06-25T20:08:51.638092",
-            "updated_at": "2020-06-25T20:08:51.638128"
-            },
-        }
-    }
+    computed:{
+        ...mapState([
+            'item',
+            'payment_method'
+        ]),
+    },
+    created(){
+        this.detailBike(this.bikeId)
+            .catch(err => {
+                alert("해당 매물을 찾을 수 없습니다.")
+                this.$router.back()
+            })
+    },
 }
 </script>
 
@@ -220,6 +189,7 @@ export default {
             p{
                 margin: 0;
                 margin-right: 0.5rem;
+                border: 0;
                 &.active{
                     color: $orange;
                 }

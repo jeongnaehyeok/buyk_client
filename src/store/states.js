@@ -1,4 +1,6 @@
 export default{
-    buykFilter:{},
+    filter:{},
     items:[],
+    item:{},
+    payment_method:{},
 }

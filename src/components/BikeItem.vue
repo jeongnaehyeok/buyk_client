@@ -1,5 +1,6 @@
 <template>
-  <router-link class="bike-item" :to="{ name: 'Index'}">
+  <router-link class="bike-item" 
+    :to="{ name: 'Detail', params:{ bikeId: item.id.toString() }}">
     <carousel class="casousel-box"
       :per-page="1" 
       :loop="true"
@@ -9,7 +10,7 @@
       paginationColor="#e5e5e5"
       paginationPosition="bottom-overlay">
       <slide v-for="image in item.images" :key="image.id">
-        <img v-bind:src="'http://127.0.0.1:8000'+image.image" alt="">
+        <img :src="'http://127.0.0.1:8000'+image.image" alt="">
       </slide>
     </carousel>
     <div class="info-contain">
