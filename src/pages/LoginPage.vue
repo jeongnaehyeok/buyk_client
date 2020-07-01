@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     name: 'LoginPage',
     methods:{
@@ -24,7 +26,22 @@ export default {
         const { name, password } = this
         if(!name) return alert('아이디를 입력해주세요!')
         if(!password) return alert('비밀번호를 입력해주세요!')
-      }
+        this.login({ name, password })
+          .then(res => {
+            alert('로그인이 완료되었습니다.');
+            this.$router.push({name: "List"})
+          })
+          .catch(err => {
+            if(err.response){
+              if(err.response.status == 400){
+                alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다")
+              }
+            }
+          })
+      },
+      ...mapActions([
+        'login',
+      ])
     },
     data(){
       return{

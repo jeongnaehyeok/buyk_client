@@ -11,10 +11,10 @@
             v-model="email"/>
         <input type="password" 
             placeholder="비밀번호를 입력해주세요"
-            v-model="password">
+            v-model="password1">
         <input type="password" 
             placeholder="비밀번호를 다시 한번 입력해주세요."
-            v-model="passwordConfirm">
+            v-model="password2">
         <button>SignUp</button>
         <p>이미 가입하셨나요? <router-link :to="{ name: 'Login' }">로그인하러가기</router-link></p>
       </form>
@@ -23,21 +23,36 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     name: 'SignupPage',
     methods:{
       onSubmit(){
-        const { name, email, password, passwordConfirm } = this;
-        if(!name || !email || !password || !passwordConfirm) return  alert('모든 항목을 입력해주세요.')
-        if(password !== passwordConfirm) return alert('비밀번호가 일치하지 않습니다.')
-      }
+        const { name, email, password1, password2 } = this;
+        const reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; 
+        if(!name || !email || !password1 || !password2) return  alert('모든 항목을 입력해주세요.')
+        if(!reg_email.test(email)) return alert('이메일 형식이 맞지 않습니다.');
+        if(password1 !== password2) return alert('비밀번호가 일치하지 않습니다.')
+        this.signup({ name, email, password1, password2 })
+          .then(res => {
+            alert('회원가입이 완료되었습니다.');
+            this.$router.push({name: "List"})
+          })
+          .catch(err => {
+            alert('아이디가 이미 존재합니다.')
+          })
+      },
+      ...mapActions([
+        'signup',
+      ])
     },
     data(){
       return{
         name:'',
         email:'',
-        password:'',
-        passwordConfirm:''
+        password1:'',
+        password2:''
       }
     }
 }

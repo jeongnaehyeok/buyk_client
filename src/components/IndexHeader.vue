@@ -72,9 +72,9 @@ export default {
       const bike_type = e.currentTarget.id
       console.log(bike_type);
       this.getList({bike_style:bike_type})
-        .then(()=>{
+        .then(
           this.$router.push({name: "List"})
-        })
+        )
     },
     ...mapActions([
       'getList',

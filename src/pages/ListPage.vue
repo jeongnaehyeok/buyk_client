@@ -4,7 +4,7 @@
       <p class="title">실시간 매물</p>
       <item-list :items="items"/>
       <p class="title">최근 본 매물</p>
-      <item-list :items="items"/>
+      <item-list :items="beforShow"/>
   </div>
 </template>
 
@@ -32,11 +32,13 @@ export default {
     },
     created(){
         this.buyKFilter = localStorage.BuyKFilter ? JSON.parse(localStorage.BuyKFilter) : [];
+        this.beforShow = localStorage.BeforeShow ? JSON.parse(localStorage.BeforeShow) : [];
         this.getList(this.filter)
     },
     data(){
         return{
-            buyKFilter:{}
+            buyKFilter:{},
+            beforShow:[]
         }
     }
 }

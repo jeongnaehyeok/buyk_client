@@ -1,7 +1,11 @@
 import {
     GET_LIST,
-    DETAIL_BIKE
+    DETAIL_BIKE,
+    SET_ACCESS_TOKEN,
+    SET_MY_INFO
 } from './mutations-types'
+import api from '@/api'
+import Cookies from 'js-cookie'
 
 export default{
     [GET_LIST](state, payload){
@@ -19,5 +23,15 @@ export default{
         BeforeShow.push(payload)
         const jsonBeforeShow = JSON.stringify(BeforeShow)
         localStorage.setItem('BeforeShow', jsonBeforeShow)
+    },
+    [SET_ACCESS_TOKEN](state, token){
+        if(token){
+            state.accessToken = token
+            api.defaults.headers.common.Authorization = `jwt ${token}`
+            Cookies.set('accessToken', token)
+        }
+    },
+    [SET_MY_INFO](state, user){
+        state.me = user
     }
 }

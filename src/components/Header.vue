@@ -14,8 +14,8 @@
       </form>
     </div>
     <div class="header-right-contain">
-      <div class="sell-box" v-if="false">
-        <p>방구석 호랑이님 바이크를</p>
+      <div class="sell-box" v-if="isAuthorized">
+        <p>{{ me.username }}님 바이크를</p>
         <p>판매하시겠습니까?</p>
         <p class="sell-btn">
           <router-link :to="{ name: 'UserItem'}">
@@ -23,7 +23,7 @@
           </router-link>
         </p>
       </div>
-      <div class="login-contain" v-if="true">
+      <div class="login-contain" v-if="!isAuthorized">
         <router-link :to="{ name: 'Login'}">
           Login
         </router-link>
@@ -37,13 +37,19 @@
 </template>
 
 <script>
+import { mapGetters, mapState, mapActions } from 'vuex'
+
 export default {
     name:'Header',
     methods:{
       onSubmit(){
         console.log("검색기능은 구현하지 못했습니다.");
       }
-    }
+    },
+    computed:{
+        ...mapGetters(['isAuthorized']),
+        ...mapState(['me'])
+    },
 }
 </script>
 
