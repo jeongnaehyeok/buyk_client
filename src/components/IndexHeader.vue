@@ -27,7 +27,7 @@
               <li class="bike_type-box" 
                 v-for="item in bikeTypes" 
                 :key="item.bike_type" 
-                @click.capture="bikeTypeSearch"
+                @click.prevent="bikeTypeSearch"
                 :id="item.bike_type">
                 <img :src="item.image" :alt="item.name">
                 <p>{{ item.name }}</p>
@@ -70,7 +70,8 @@ export default {
     },
     bikeTypeSearch(e){
       const bike_type = e.currentTarget.id
-      console.log(bike_type);
+      const jsonBuyKFilter = JSON.stringify({ bike_style:bike_type })
+      localStorage.setItem('BuyKFilter', jsonBuyKFilter)
       this.getList({bike_style:bike_type})
         .then(
           this.$router.push({name: "List"})

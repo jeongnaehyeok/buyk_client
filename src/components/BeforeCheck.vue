@@ -3,9 +3,7 @@
     <div class="scroll_contain">
         <ul>
             <li v-for="item in items" 
-                :key="item.index" 
-                :id="item.id"
-                @click="onConfirm">
+                :key="item.index">
                 <img :src="'http://127.0.0.1:8000' + item.images[0].image" alt="">
                 <div class="bike_info-box">
                     <div class="state_text-box">
@@ -13,7 +11,8 @@
                         <p class="price">{{ showPrice(item.price) }} 만웝</p>
                     </div>
                     <div class="state_btn-box">
-                        <button>확인</button>
+                        <button :id="item.id"
+                            @click="onConfirm">확인</button>
                     </div>
                 </div>
             </li>
