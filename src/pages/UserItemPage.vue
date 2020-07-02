@@ -12,8 +12,9 @@
           <state-check 
             v-show="activeBtn"
             :items="sellItems"/>
-          <state-check 
-            v-show="!activeBtn"/>
+          <before-check 
+            v-show="!activeBtn"
+            :items="beforShow"/>
           <router-link class="sell_btn-contain" :to="{ name: 'Register'}">바이크 판매하기</router-link>
       </div>
   </div>
@@ -21,11 +22,15 @@
 
 <script>
 import StateCheck from '@/components/StateCheck'
+import BeforeCheck from '@/components/BeforeCheck'
+
+import { mapActions, mapState } from 'vuex'
 
 export default {
     name: 'UserItemPage',
     components:{
-        StateCheck
+        StateCheck,
+        BeforeCheck
     },
     methods:{
         leftBtn(){
@@ -33,23 +38,28 @@ export default {
         },
         rightBtn(){
             this.activeBtn = false
-        }
+        },
+        ...mapActions([
+            'getRegistList',
+        ])
+    },
+    computed:{
+        ...mapState([
+            'items'
+        ])
+    },
+    created(){
+        this.getRegistList()
+            .then(()=>{
+                this.sellItems = this.items
+            })
+        this.beforShow = localStorage.BeforeShow ? JSON.parse(localStorage.BeforeShow) : [];
     },
     data(){
         return{
             activeBtn:true,
-            sellItems:[
-                {
-                    model: 'BMW - S100RR',
-                    price: 3000,
-                    images:[
-                        {
-                            id:1,
-                            image:'/static/item1.jpg'
-                        }
-                    ]
-                },
-            ]
+            sellItems:[],
+            beforShow:[]
         }
     }
 }

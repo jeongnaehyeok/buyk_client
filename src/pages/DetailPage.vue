@@ -107,11 +107,11 @@ export default {
         ]),
     },
     created(){
+        const BeforeShow = localStorage.BeforeShow ? JSON.parse(localStorage.BeforeShow) : [];
+        const findIndex = BeforeShow.findIndex(v => v.id == this.bikeId)
         this.detailBike(this.bikeId)
             .then(data => {
-                    const BeforeShow = localStorage.BeforeShow ? JSON.parse(localStorage.BeforeShow) : [];
                     if(BeforeShow.length > 4) BeforeShow.splice(0, 1)
-                    const findIndex = BeforeShow.findIndex(v => v.id == data.id)
                     if(findIndex>-1){
                         BeforeShow.splice(findIndex, 1)
                     }
@@ -122,6 +122,9 @@ export default {
             )
             .catch(err => {
                 alert("해당 매물을 찾을 수 없습니다.")
+                BeforeShow.splice(findIndex, 1)
+                const jsonBeforeShow = JSON.stringify(BeforeShow)
+                localStorage.setItem('BeforeShow', jsonBeforeShow)
                 this.$router.back()
             })
     },

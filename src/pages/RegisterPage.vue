@@ -37,12 +37,16 @@
         :class="{deactive:(progressIndex < 1) || (progressIndex == 7)}"
         @click="preBtn"
         :disabled="progressIndex == 7">이전</button>
-      <button v-if="this.progressIndex < 7"
+      <button v-if="this.progressIndex < 6"
         :class="{deactive:proDeactive}"
         @click="proBtn"
         :disabled="proDeactive">다음</button>
+      <button v-else-if="this.progressIndex == 6"
+        :class="{deactive:proDeactive}"
+        @click="onSubmit"
+        :disabled="proDeactive">제출</button>
       <button v-else
-        @click="onSubmit">제출</button>
+        @click="onFinish">돌아가기</button>
     </div>
   </div>
 </template>
@@ -56,6 +60,8 @@ import BikeBasicForm from '@/components/form/BikeBasicForm'
 import RepairForm from '@/components/form/RepairForm'
 import TuningForm from '@/components/form/TuningForm'
 import DetailForm from '@/components/form/DetailForm'
+
+import api from '@/api'
 
 export default {
     name:'RegisterPage',
@@ -72,6 +78,7 @@ export default {
     methods:{
       preBtn(){
         this.progressIndex = this.progressIndex < 1 ? 0 : this.progressIndex-1
+        this.checkInput()
       },
       proBtn(){
         this.progressIndex = this.progressIndex > 6 ? 7 : this.progressIndex+1
@@ -104,19 +111,45 @@ export default {
         }
       },
       onSubmit(){
-        console.log("제출");
-        console.log("model", this.model);
-        console.log("images", this.images);
-        console.log("bike_style", this.bike_style);
-        console.log("price", this.price);
-        console.log("deal_area", this.deal_area);
-        console.log("model_year", this.model_year);
-        console.log("driven_distance", this.driven_distance);
-        console.log("document_status", this.document_status);
-        console.log("repair_history", this.repair_history);
-        console.log("tuning_history", this.tuning_history);
-        console.log("detail_information", this.detail_information);
-        console.log("payment_method", this.payment_method);
+        const regitser = {
+          model: this.model,
+          bike_style: this.bike_style,
+          price: this.price,
+          deal_area: this.deal_area,
+          model_year: this.model_year,
+          driven_distance: this.driven_distance,
+          document_status: this.document_status,
+          repair_history: this.repair_history,
+          tuning_history: this.tuning_history,
+          detail_information: this.detail_information,
+          payment_method: this.payment_method,
+        }
+        api.post('/api/bikes/create', {...regitser})
+          .then(res => {
+            const { id } = res.data
+            for(let image of this.images){
+              const dataForm = new FormData()
+              dataForm.append('image', image)
+              dataForm.append('bike', id)
+              api.post('/api/bikes/image/create', 
+                dataForm, 
+                { headers:{
+                  'Content-Type': 'multipart/form-data'
+                }})
+                .catch(err => {
+                  console.log("이미지 오류");
+                })
+            }
+          })
+          .then(()=>{
+            this.progressIndex = 7
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+      },
+      onFinish(){
+        this.$router.push({ name: 'UserItem'})
       },
       onModel(inputModel){
         this.model = inputModel
@@ -214,8 +247,8 @@ export default {
     }
     button{
       @include outline-none;
-      width: 5rem;
       height: 2.75rem;
+      padding: 0 1rem;
       border: 0;
       border-radius: 10px;
       box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);

@@ -232,7 +232,6 @@ export default {
         }
     },
     created(){
-        console.log(this.buyKFilter);
         this.activeArea = this.buyKFilter.deal_area ? this.buyKFilter.deal_area : ''
         this.activeBike = this.buyKFilter.bike_style ? this.buyKFilter.bike_style : ''
         this.model_year__gte = this.buyKFilter.model_year__gte ? this.buyKFilter.model_year__gte : ''

@@ -28,7 +28,6 @@ export default {
                 if(!filter[v]) delete filter[v]
             })
             this.buyKFilter = filter
-            console.log(this.buyKFilter);
             this.getList(this.buyKFilter)
                 .then(()=>{
                     const jsonBuyKFilter = JSON.stringify(this.buyKFilter)

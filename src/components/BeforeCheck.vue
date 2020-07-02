@@ -1,17 +1,19 @@
 <template>
-  <div class="state-check">
+  <div class="before-check">
     <div class="scroll_contain">
         <ul>
-            <li v-for="item in items" :key="item.index">
+            <li v-for="item in items" 
+                :key="item.index" 
+                :id="item.id"
+                @click="onConfirm">
                 <img :src="'http://127.0.0.1:8000' + item.images[0].image" alt="">
                 <div class="bike_info-box">
                     <div class="state_text-box">
                         <p class="model">{{ item.model }}</p>
-                        <p class="price">{{ showPrice(item.price) }} 만원</p>
+                        <p class="price">{{ showPrice(item.price) }} 만웝</p>
                     </div>
                     <div class="state_btn-box">
-                        <button @click.prevent="onEdit" :id="item.id">수정</button>
-                        <button @click.prevent="onDelete" :id="item.id">삭제</button>
+                        <button>확인</button>
                     </div>
                 </div>
             </li>
@@ -22,10 +24,9 @@
 
 <script>
 import { checkPrice } from '@/utils';
-import api from '@/api'
 
 export default {
-    name:'StateCkeck',
+    name:'BeforeCheck',
     props:{
         items:{
             type:Array,
@@ -35,26 +36,8 @@ export default {
         showPrice(price){
             return checkPrice(price)
         },
-        onDelete(e){
-            const id = e.target.id
-            api.delete(`/api/bikes/${id}/delete`)
-                .then(res => {
-                    alert('게시글이 성공적으로 삭제되었습니다.')
-                    this.$router.go()
-                })
-                .catch(err => {
-                    if(err.response.status === 401){
-                        alert('로그인이 필요합니다.')
-                        this.$router.push({ name: 'Signin' })
-                    }
-                    else if(err.response.status === 403){
-                        alert(err.response.data.msg)
-                    }                    
-                })
-        },
-        onEdit(e){
-            const id = e.target.id
-            // this.$router.push({name: "List"})
+        onConfirm(e){
+            this.$router.push({ name: 'Detail', params:{ bikeId: e.target.id }})
         }
     },
 }
@@ -63,7 +46,7 @@ export default {
 <style lang="scss">
 @import '@/style/index.scss';
 
-.state-check {
+.before-check {
     width: 34.375rem;
     height: 36rem;
     margin-bottom: 0.25rem;
@@ -99,6 +82,7 @@ export default {
                 margin-bottom: 2.25rem;
                 padding: 1rem;
                 background: $white;
+                cursor: pointer;
                 img{
                     width: 10rem;
                     height: 7.5rem;
@@ -128,12 +112,8 @@ export default {
                             margin-left: 0.125rem;
                             border: 0;
                             border-radius: 5px;
-                            color: $orange;
-                            cursor: pointer;
-                            &:nth-child(2){
-                                color:$white;
-                                background-color: $orange;
-                            }
+                            color:$white;
+                            background-color: $orange;
                         }
                     }
                 }

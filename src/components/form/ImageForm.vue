@@ -12,7 +12,7 @@
         @change="onChangeImages">
       <button type="button" @click="onClickImageUpload">이미지 업로드</button>
     </div>
-    <div class="image-contain" v-if="imageUrl">
+    <div class="image-contain" v-show="imageUrl">
       <a class="image-box" 
         @click="onClickImageDelete" 
         v-for="image in imageUrl" 
@@ -38,9 +38,9 @@ export default {
     },
     onChangeImages(e) {
       const files = e.target.files
+      this.$emit('onImage', files)
       for(let file of files){
         this.imageUrl.push(URL.createObjectURL(file));
-        this.$emit('onImage', this.imageUrl)
       }
     },
     onClickImageDelete(e){
@@ -51,7 +51,9 @@ export default {
     }
   },
   created(){
-    this.imageUrl = [...this.images]
+    this.imageUrl = this.images.map(v => {
+      return URL.createObjectURL(v)
+    })
   },
   data(){
     return{

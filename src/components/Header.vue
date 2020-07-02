@@ -15,7 +15,7 @@
     </div>
     <div class="header-right-contain">
       <div class="sell-box" v-if="isAuthorized">
-        <p>{{ me.username }}님 바이크를</p>
+        <p @click="onLogout">{{ me.username }}님 바이크를</p>
         <p>판매하시겠습니까?</p>
         <p class="sell-btn">
           <router-link :to="{ name: 'UserItem'}">
@@ -44,7 +44,13 @@ export default {
     methods:{
       onSubmit(){
         console.log("검색기능은 구현하지 못했습니다.");
-      }
+      },
+      onLogout(){
+        this.logout()
+        alert('로그아웃 되었습니다.')
+        this.$router.push({ name: 'Index' })
+      },
+      ...mapActions(['logout'])
     },
     computed:{
         ...mapGetters(['isAuthorized']),

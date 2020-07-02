@@ -37,6 +37,7 @@ export default {
 
 .progress-bar{
     width: 100%;
+    margin-top: 1rem;
     .progress_bar-contain{
         width: 100%;
         height: 1.25rem;

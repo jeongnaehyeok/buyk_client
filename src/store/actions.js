@@ -3,7 +3,9 @@ import {
     GET_LIST,
     DETAIL_BIKE,
     SET_ACCESS_TOKEN,
-    SET_MY_INFO
+    SET_MY_INFO,
+    DESTROY_ACCESS_TOKEN,
+    DESTROY_MY_INFO
 } from './mutations-types'
 
 const getList = ({commit}, filter) => {
@@ -46,10 +48,24 @@ const signinByToken = ({commit}, token) => {
         })
 }
 
+const getRegistList = ({commit})=>{
+    return api.get('/api/bikes/list/register/')
+        .then(res => {
+            commit(GET_LIST, res.data)
+        })
+}
+
+const logout = ({commit}) => {
+    commit(DESTROY_ACCESS_TOKEN)
+    commit(DESTROY_MY_INFO)
+}
+
 export default{
     getList,
     detailBike,
     login,
     signup,
-    signinByToken
+    signinByToken,
+    getRegistList,
+    logout,
 }
