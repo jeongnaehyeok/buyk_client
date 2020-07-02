@@ -1,6 +1,7 @@
 <template>
   <div class="list-page">
-      <filter-bar />
+      <filter-bar :buyKFilter="buyKFilter"
+        @onFilter="onFilter"/>
       <p class="title">실시간 매물</p>
       <item-list :items="items"/>
       <p class="title">최근 본 매물</p>
@@ -21,6 +22,22 @@ export default {
         ItemList
     },
     methods:{
+        onFilter(payload){
+            const filter = {...this.buyKFilter, ...payload}
+            Object.keys(filter).map(v => {
+                if(!filter[v]) delete filter[v]
+            })
+            this.buyKFilter = filter
+            console.log(this.buyKFilter);
+            this.getList(this.buyKFilter)
+                .then(()=>{
+                    const jsonBuyKFilter = JSON.stringify(this.buyKFilter)
+                    localStorage.setItem('BuyKFilter', jsonBuyKFilter)
+                })
+                .catch(err => {
+                    alert("오류 발생")
+                })
+        },
         ...mapActions([
             'getList',
         ])
@@ -31,14 +48,14 @@ export default {
         ])
     },
     created(){
-        this.buyKFilter = localStorage.BuyKFilter ? JSON.parse(localStorage.BuyKFilter) : [];
+        this.buyKFilter = localStorage.BuyKFilter ? JSON.parse(localStorage.BuyKFilter) : {};
         this.beforShow = localStorage.BeforeShow ? JSON.parse(localStorage.BeforeShow) : [];
-        this.getList(this.filter)
+        this.getList(this.buyKFilter)
     },
     data(){
         return{
             buyKFilter:{},
-            beforShow:[]
+            beforShow:[],
         }
     }
 }

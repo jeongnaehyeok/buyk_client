@@ -5,8 +5,8 @@
             :class="{active:activeFilter == 'area'}"
             id="area"
             @click="filterToggle">
-                <p>지역</p>
-                <i class="fas fa-angle-down"></i>
+                <p id="area">지역</p>
+                <i class="fas fa-angle-down" id="area"></i>
           </div>
           <div class="filter-box"
             v-show="activeFilter == 'area'">
@@ -24,8 +24,8 @@
             :class="{active:activeFilter == 'type'}"
             id="type"
             @click="filterToggle">
-                <p>타입</p>
-                <i class="fas fa-angle-down"></i>
+                <p id="type">타입</p>
+                <i class="fas fa-angle-down" id="type"></i>
           </div>
           <div class="filter-box"
             v-show="activeFilter == 'type'">
@@ -47,17 +47,25 @@
             :class="{active:activeFilter == 'price'}"
             id="price"
             @click="filterToggle">
-                <p>가격</p>
-                <i class="fas fa-angle-down" ></i>
+                <p id="price">가격</p>
+                <i class="fas fa-angle-down" id="price"></i>
           </div>
           <div class="number_filter-box"
             v-show="activeFilter == 'price'">
-            <input type="number" 
-                placeholder="최소"
-                v-model="filter.price__gte">
-            <input type="number" 
-                placeholder="최대"
-                v-model="filter.price__lte">
+            <div class="number-box">
+                <input type="number" 
+                    placeholder="최소"
+                    v-model="price__gte"
+                    @blur="inputPriceGTE">
+                <p>만원</p>
+            </div>
+            <div class="number-box">
+                <input type="number" 
+                    placeholder="최대"
+                    v-model="price__lte"
+                    @blur="inputPriceLTE">
+                <p>만원</p>
+            </div>
           </div>
       </div>
       <div class="filter-contain">
@@ -65,17 +73,25 @@
             :class="{active:activeFilter == 'distance'}"
             id="distance"
             @click="filterToggle">
-                <p>주행 거리</p>
-                <i class="fas fa-angle-down"></i>
+                <p id="distance">주행 거리</p>
+                <i class="fas fa-angle-down" id="distance"></i>
           </div>
           <div class="number_filter-box"
             v-show="activeFilter == 'distance'">
-            <input type="number" 
-                placeholder="최소"
-                v-model="filter.model_year__gte">
-            <input type="number" 
-                placeholder="최대"
-                v-model="filter.model_year__lte">
+            <div class="number-box">
+                <input type="number" 
+                    placeholder="최소"
+                    v-model="driven_distance__gte"
+                    @blur="inputDistanceGTE">
+                <p>Km</p>
+            </div>
+            <div class="number-box">
+                <input type="number" 
+                    placeholder="최대"
+                    v-model="driven_distance__lte"
+                    @blur="inputDistanceLTE">
+                <p>Km</p>
+            </div>
           </div>
       </div>
       <div class="filter-contain">
@@ -83,17 +99,25 @@
             :class="{active:activeFilter == 'year'}"
             id="year"
             @click="filterToggle">
-                <p>연식</p>
-                <i class="fas fa-angle-down" ></i>
+                <p id="year">연식</p>
+                <i class="fas fa-angle-down" id="year"></i>
           </div>
           <div class="number_filter-box"
             v-show="activeFilter == 'year'">
-            <input type="number" 
-                placeholder="최소"
-                v-model="filter.model_year__gte">
-            <input type="number" 
-                placeholder="최대"
-                v-model="filter.model_year__lte">
+            <div class="number-box">
+                <input type="number" 
+                    placeholder="최소"
+                    v-model="model_year__gte"
+                    @blur="inputYearGTE">
+                <p>년</p>
+            </div>
+            <div class="number-box">
+                <input type="number" 
+                    placeholder="최대"
+                    v-model="model_year__lte"
+                    @blur="inputYearLTE">
+                <p>년</p>
+            </div>
           </div>
       </div>
   </div>
@@ -102,6 +126,11 @@
 <script>
 export default {
     name:"FilterBar",
+    props:{
+        buyKFilter:{
+            type: Object      
+        }
+    },
     methods:{
         filterToggle(e){
             const target = e.target.id
@@ -109,23 +138,117 @@ export default {
         },
         areaToggle(e){
             const target = e.target.id
-            this.activeArea = this.activeArea == target ? 'AL' : target
+            this.activeArea = this.activeArea == target ? '' : target
+            this.$emit('onFilter', {deal_area:this.activeArea})
         },
         typeToggle(e){
             const target = e.target.id
-            console.log(target);
             this.activeBike = this.activeBike == target ? '' : target
+            this.$emit('onFilter', {bike_style:this.activeBike})
+        },
+        inputPriceGTE(){
+            if(this.price__gte){
+                this.price__gte = this.price__gte < 2000000 ? this.price__gte : 1999999
+                this.price__gte = this.price__gte > 1 ? this.price__gte : 1
+                if(this.price__lte) {
+                    this.price__lte = Math.max(this.price__lte, Number(this.price__gte) + 1)
+                    this.price__gte = Math.min(this.price__gte, Number(this.price__lte) - 1)
+                }
+                else{
+                    this.price__gte = Math.min(this.price__gte, 2000000)
+                }
+            }
+            this.$emit('onFilter', {price__gte:this.price__gte})
+        },
+        inputPriceLTE(){
+            if(this.price__lte){
+                this.price__lte = this.price__lte > 1 ? this.price__lte : 2
+                this.price__lte = this.price__lte < 200000 ? this.price__lte : 200000
+                if(this.price__gte) {
+                    this.price__gte = Math.min(this.price__gte, Number(this.price__lte) - 1)
+                    this.price__lte = Math.max(this.price__lte, Number(this.price__gte) + 1)
+                }
+                else{
+                    this.price__lte = Math.max(this.price__lte, 0)
+                }
+            }
+            this.$emit('onFilter', {price__lte:this.price__lte})
+        },
+        inputDistanceGTE(){
+            if(this.driven_distance__gte){
+                this.driven_distance__gte = this.driven_distance__gte < 2000000 ? this.driven_distance__gte : 1999999
+                this.driven_distance__gte = this.driven_distance__gte > 1 ? this.driven_distance__gte : 1
+                if(this.driven_distance__lte) {
+                    this.driven_distance__lte = Math.max(this.driven_distance__lte, Number(this.driven_distance__gte) + 1)
+                    this.driven_distance__gte = Math.min(this.driven_distance__gte, Number(this.driven_distance__lte) - 1)
+                }
+                else{
+                    this.driven_distance__gte = Math.min(this.driven_distance__gte, 2000000)
+                }
+            }
+            this.$emit('onFilter', {driven_distance__gte:this.driven_distance__gte})
+        },
+        inputDistanceLTE(){
+            if(this.driven_distance__lte){
+                this.driven_distance__lte = this.driven_distance__lte > 1 ? this.driven_distance__lte : 2
+                this.driven_distance__lte = this.driven_distance__lte < 2000000 ? this.driven_distance__lte : 2000000
+                if(this.driven_distance__gte) {
+                    this.driven_distance__gte = Math.min(this.driven_distance__gte, Number(this.driven_distance__lte) - 1)
+                    this.driven_distance__lte = Math.max(this.driven_distance__lte, Number(this.driven_distance__gte) + 1)
+                }
+                else{
+                    this.driven_distance__lte = Math.max(this.driven_distance__lte, 0)
+                }
+            }
+            this.$emit('onFilter', {driven_distance__lte:this.driven_distance__lte})
+        },
+        inputYearGTE(){
+            if(this.model_year__gte){
+                this.model_year__gte = this.model_year__gte < 2020 ? this.model_year__gte : 2019
+                this.model_year__gte = this.model_year__gte > 1950 ? this.model_year__gte : 1950
+                if(this.model_year__lte) {
+                    this.model_year__lte = Math.max(this.model_year__lte, Number(this.model_year__gte) + 1)
+                    this.model_year__gte = Math.min(this.model_year__gte, Number(this.model_year__lte) - 1)
+                }
+                else{
+                    this.model_year__gte = Math.min(this.model_year__gte, 2020)
+                }
+            }
+            this.$emit('onFilter', {model_year__gte:this.model_year__gte})
+        },
+        inputYearLTE(){
+            if(this.model_year__lte){
+                this.model_year__lte = this.model_year__lte > 1950 ? this.model_year__lte : 1951
+                this.model_year__lte = this.model_year__lte < 2020 ? this.model_year__lte : 2020
+                if(this.model_year__gte) {
+                    this.model_year__gte = Math.min(this.model_year__gte, Number(this.model_year__lte) - 1)
+                    this.model_year__lte = Math.max(this.model_year__lte, Number(this.model_year__gte) + 1)
+                }
+                else{
+                    this.model_year__lte = Math.max(this.model_year__lte, 1950)
+                }
+            }
+            this.$emit('onFilter', {model_year__lte:this.model_year__lte})
         }
     },
     created(){
+        console.log(this.buyKFilter);
+        this.activeArea = this.buyKFilter.deal_area ? this.buyKFilter.deal_area : ''
+        this.activeBike = this.buyKFilter.bike_style ? this.buyKFilter.bike_style : ''
+        this.model_year__gte = this.buyKFilter.model_year__gte ? this.buyKFilter.model_year__gte : ''
+        this.model_year__lte = this.buyKFilter.model_year__lte ? this.buyKFilter.model_year__lte : ''
+        this.price__gte = this.buyKFilter.price__gte ? this.buyKFilter.price__gte : ''
+        this.price__lte = this.buyKFilter.price__lte ? this.buyKFilter.price__lte : ''
+        this.driven_distance__gte = this.buyKFilter.driven_distance__gte ? this.buyKFilter.driven_distance__gte : ''
+        this.driven_distance__lte = this.buyKFilter.driven_distance__lte ? this.buyKFilter.driven_distance__lte : ''
     },
     data(){
         return{
             activeFilter:'',
-            activeArea:'AL',
+            activeArea:'',
             activeBike:'',
             areaList:[
-                {"code":'AL', "ko_area":'전체'},
+                {"code":'', "ko_area":'전체'},
                 {"code":'SU', "ko_area":'서울'},
                 {"code":'BS', "ko_area":'부산'},
                 {"code":'IC', "ko_area":'인천'},
@@ -196,19 +319,12 @@ export default {
                 "bike_type":'MI',
                 }
             ],
-            filter:{
-                model:'',
-                deal_area:'',
-                bike_style:'',
-                model_year__gte:'',
-                model_year__lte:'',
-                price__gte:'',
-                price__lte:'',
-                driven_distance__gte:'',
-                driven_distance__lte:'',
-                payment_method:{},
-                page:'',
-            }
+            price__gte:'',
+            price__lte:'',
+            driven_distance__gte:'',
+            driven_distance__lte:'',
+            model_year__gte:'',
+            model_year__lte:'',
         }
     }
 }
@@ -269,15 +385,22 @@ export default {
         }
         .number_filter-box{
             @include filter-box;
-            width: 10rem;
             padding: 1rem;
-            input[type=number]{
-                @include outline-none;
-                width: 100%;
+            .number-box{
+                display:inline-flex;
+                align-items: center;
                 margin-bottom: 1rem;
-                border: 0;
-                border-radius: 5px;
-                font-size: 1rem;
+                input[type=number]{
+                    @include outline-none;
+                    width: 5rem;
+                    margin-right: 0.5rem;
+                    border: 0;
+                    border-radius: 5px;
+                    font-size: 1rem;
+                }
+                p{
+                    font-size: 1rem;
+                }
                 &:last-child{
                     margin-bottom: 0;
                 }

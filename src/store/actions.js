@@ -7,7 +7,7 @@ import {
 } from './mutations-types'
 
 const getList = ({commit}, filter) => {
-    return api.get('/api/bikes/list/', filter)
+    return api.get('/api/bikes/list/', {params: {...filter}})
         .then(res => {
             commit(GET_LIST, res.data)
         })
@@ -16,6 +16,7 @@ const detailBike = ({commit}, id) => {
     return api.get(`/api/bikes/${id}`)
         .then(res => {
             commit(DETAIL_BIKE, res.data)
+            return res.data
         })
 }
 
