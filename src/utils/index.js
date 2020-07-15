@@ -2,9 +2,9 @@
 // 매물이 지난 시간 확인하는 함수
 
 export const checkTime = (time) => {
-    const old = new Date(time+"z");
+    const old = new Date(time);
     const now = new Date();
-    const gap = parseInt((now.getTime()-old.getTime())/10000);
+    const gap = parseInt((now.getTime()-old.getTime())/1000);
     if(gap<60){
       return `${gap} 초 전`;
     }

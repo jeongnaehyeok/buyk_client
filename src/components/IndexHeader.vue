@@ -242,7 +242,7 @@ export default {
       position: absolute;
       width: $box-width;
       height: 13.75rem;
-      margin-top: $serch-box-height/2+$search_help-height/2;
+      margin-top: $serch-box-height+$search_help-height;
       margin-left: -$serch-box-padding;
       border-radius: 2px;
       box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.35);
